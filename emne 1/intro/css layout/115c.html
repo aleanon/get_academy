@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* body {
+            display: grid;
+            grid-template-areas: 
+            "app ."
+            "app input"
+            "app input"
+            "app input"
+            "app input"
+            "app ."
+            "label input"
+            "label input"
+            "label input";
+            width: 500px;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(9, 50px);
+        }
+
+        #app {
+            grid-area: app;
+            display: contents;
+        }
+
+        input {
+            grid-area: input;
+            width: 150px;
+        }
+
+        label {
+            grid-area: label;
+        } */
+
+        #app {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #app h3 {
+            grid-column: span 2;
+            text-align: center;
+        }
+
+        #app input[type="text"],
+        #app input[type="range"],
+        #app input[type="number"] {
+            grid-column: 2;
+        }
+
+        #app input[type="radio"] {
+            grid-column: 2;
+            margin-right: 5px;
+        }
+
+        #app label {
+            grid-column: 1;
+            grid-row-start: 7;
+            justify-self: start;
+        }
+
+        #app input[name="fav_language"] ~ br:nth-of-type(2) {
+            grid-column: span 2;
+            justify-self: start;
+        }
+
+
+        #app input[type="radio"] {
+            grid-column: 2;
+            grid-row-start: 7;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3>Mitt skjema</h3>
+        First Name<br/> <input type="text" id="fname"><br/>
+        Last Name<br/> <input type="text" id="lname"><br/>
+        En til hundre<br/> <input type="range" id="zero2hundred"><br/>
+        Skriv inn et tall<br/> <input type="number" id="lname"><br/>
+        Favorittspråk:<br/>
+        <input type="radio" name="fav_language" id="html">
+        <label for="html">HTML</label>
+        <br/>
+        <input type="radio" name="fav_language" id="css">
+        <label for="css">CSS</label>
+        <br/>
+        <input type="radio" name="fav_language" id="js">
+        <label for="js">JavaScript</label>
+        <br/>
+    </div>
+</body>
+</html>

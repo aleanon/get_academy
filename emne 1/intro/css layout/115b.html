@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* * {
+            box-sizing: border-box;
+        } */
+
+        body {
+            background-color: brown;
+        }
+
+        div.flex-box {
+            display: inline-flex;
+            background-color: coral;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        div.space {
+            background-color: chocolate;
+            width: 100%;
+            height: 1fr;
+        }
+
+        div.number-box {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 1fr;  
+            justify-content: center;
+            background-color: aqua;
+        }
+
+        div.buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        div.number {
+            font-size: 300px;
+            background-color: aquamarine;
+        }
+
+        div.buttons {
+            display: flex;
+            justify-content: center;
+            background-color: blue;
+            width: 200px;
+            padding: 20px 40px;
+        }
+
+        button {
+            height: 100%;
+            border: solid 3px grey;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="flex-box">
+    <div class="space"><span></span></div>
+    <div class="number-box">
+        <div class="number">5</div>
+        <div class="buttons">
+            <button></button>
+            <button></button>
+        </div>
+    </div> 
+    <div class="space"><span></span></div>
+</div>
+</body>
+</html>

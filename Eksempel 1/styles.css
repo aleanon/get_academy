@@ -1,0 +1,31 @@
+h1 {
+    font-family: Georgia;
+    font-size: 40px;
+}
+
+h2 {
+    background-color: black;
+    color: white;
+}
+
+.ordnet-liste {
+    border: solid 1px blue;
+    width: 500px;
+    margin: 5rem 10rem 5rem 5rem;
+    padding: 10px;
+    background-color: blueviolet;
+}
+
+.uordnet-liste {
+    border: 2px red dashed;
+    width: 600px;
+    border-radius: 50px;
+    border-left: dotted;
+}
+
+
+
+
+
+
+

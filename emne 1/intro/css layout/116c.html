@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huset</title>
+    <script>
+        function goOutside() {
+            document.getElementById('app').innerHTML = /*HTML*/ `
+                <p>Du er utenfor en leilighet</p>
+                <button onclick="goToHall()">Gå inn</button>
+            `;
+        }
+
+        function goToHall() {
+            document.getElementById('app').innerHTML = /*HTML*/ `
+                <p>Du er i gangen</p>
+                <button onclick="goOutside()">Gå ut</button>
+                <button onclick="goToLivingroom()">Gå inn i stua</button>
+                <button onclick="goToBathroom()">Gå inn på badet</button>
+                <button onclick="goToKitchen()">Gå inn på kjøkkenet</button>
+            `;
+        }
+
+        function goToLivingroom() {
+            document.getElementById('app').innerHTML = /*HTML*/ `
+                <p>Du er i stuen</p>
+                <button onclick="goToHall()">Gå til gangen</button>
+                <button onclick="goToKitchen()">Gå inn på kjøkkenet</button>
+            `;
+        }
+
+        function goToBathroom() {
+            document.getElementById('app').innerHTML = /*HTML*/ `
+                <p>Du er på badet</p>
+                <button onclick="goToHall()">Gå til gangen</button>
+            `;
+        }
+
+        function goToKitchen() {
+            document.getElementById('app').innerHTML = /*HTML*/ `
+                <p>Du er i kjøkkenet</p>
+                <button onclick="goToHall()">Gå til gangen</button>
+                <button onclick="goToLivingroom()">Gå til stua</button>
+            `;
+        }
+
+    </script>
+</head>
+<body>
+    <div id="app"><script>goOutside()</script></div>
+</body>
+</html>

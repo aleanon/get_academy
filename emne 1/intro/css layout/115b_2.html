@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 5fr 3fr 5fr;
+            width: 100%;
+            height: 100vh;
+        }
+
+
+        div.number-box {
+            grid-column: 2;
+            grid-row: 2;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;  
+            justify-content: center;
+        }
+
+        div.buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        div.number {
+            font-size: 300px;
+        }
+
+        div.buttons {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 20px 40px;
+            margin-left: 20px;
+        }
+
+        button {
+            width: 200px;
+            height: 100%;
+            border: solid 3px grey;
+            border-radius: 10px;
+            font-size: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid">
+    <div class="number-box">
+        <div class="number">5</div>
+        <div class="buttons">
+            <button><i class='fa fa-caret-up'></i></button>
+            <button><i class='fa fa-caret-down'></i></button>
+        </div>
+    </div> 
+    </div>
+</body>
+</html>
