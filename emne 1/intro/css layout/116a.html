@@ -88,11 +88,9 @@
                 <button onclick="show13()">Øke med én</button>
                 <button onclick="show24()">Doble</button>
             `;
-        }
+        }        
 
-        
-
-        function startPage() {
+        function loadContent() {
             document.getElementById('app2').innerHTML = /*HTML*/ `
                 <h1 id="number">1</h1>
                 <button onclick="addOne()">Øke med én</button>
@@ -114,6 +112,6 @@
 <body>
     <div id="app" ><script>show1()</script></div>
 
-    <div id="app2"><script>startPage()</script></div>
+    <div id="app2"><script>loadContent()</script></div>
 </body>
 </html>

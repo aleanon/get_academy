@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traffic light</title>
     <style>
-        #grid{
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            width: 100%;
+        html body {
             height: 100vh;
+            margin: 0;
         }
 
-        #grid-cell {
-            grid-column: 2;
-            grid-row: 2;
-            display: flex;
+        #flex-box {
             height: 100%;
+            display: flex;
             justify-content: center;
+            align-items: center;
         }
-
         #traffic-light {
             display: flex;
             flex-direction: column;
@@ -52,48 +47,46 @@
     </style>
     <script>
         function redLight() {
-            document.getElementById("grid-cell").innerHTML = /*HTML*/ `
+            document.getElementById("flex-box").innerHTML = /*HTML*/ `
             <div id="traffic-light" onclick="redAndYellowLight()">
-                <div id="red-light" class="light red"></div>
-                <div id="yellow-light" class="light"></div>
-                <div id="green-light" class="light"></div>
+                <div class="light red"></div>
+                <div class="light"></div>
+                <div class="light"></div>
             </div>
             `;
         }
         function redAndYellowLight() {
-            document.getElementById("grid-cell").innerHTML = /*HTML*/ `
-            <div id=traffic-light onclick="greenLight()"> 
-                <div id="red-light" class="light red"></div>
-                <div id="yellow-light" class="light yellow"></div>
-                <div id="green-light" class="light"></div>
+            document.getElementById("flex-box").innerHTML = /*HTML*/ `
+            <div id="traffic-light" onclick="greenLight()"> 
+                <div class="light red"></div>
+                <div class="light yellow"></div>
+                <div class="light"></div>
             </div>
             `;
         }
         function greenLight() {
-            document.getElementById("grid-cell").innerHTML = /*HTML*/ `
-            <div id=traffic-light onclick="yellowLight()"> 
-                <div id="red-light" class="light"></div>
-                <div id="yellow-light" class="light"></div>
-                <div id="green-light" class="light green"></div>
+            document.getElementById("flex-box").innerHTML = /*HTML*/ `
+            <div id="traffic-light" onclick="yellowLight()"> 
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light green"></div>
             </div>
             `;
         }
         function yellowLight() {
-            document.getElementById("grid-cell").innerHTML = /*HTML*/ `
-            <div id=traffic-light onclick="redLight()"> 
-                <div id="red-light" class="light"></div>
-                <div id="yellow-light" class="light yellow"></div>
-                <div id="green-light" class="light"></div>
+            document.getElementById("flex-box").innerHTML = /*HTML*/ `
+            <div id="traffic-light" onclick="redLight()"> 
+                <div class="light"></div>
+                <div class="light yellow"></div>
+                <div class="light"></div>
             </div>
             `;
         }
     </script>
 </head>
 <body>
-    <div id="grid">
-        <div id="grid-cell">
-            <script>redLight()</script>
-        </div>
+    <div id="flex-box">
+        <script>redLight()</script>
     </div>
 </body>
 </html>
