@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <script>
+        function form() {
+            createTextInput("fname", "First name:");
+            createTextInput("lname", "Last name:");
+            createRangeInput("zero2hundred", "En til hundre:");
+            createNumberInput("number", "Skriv inn et tall:");
+            createRadioInput("html", "HTML", "fav_language");
+            createRadioInput("css", "CSS", "fav_language");
+            createRadioInput("Javascript", "Javascript", "fav_language");
+            createCheckboxInput("vehicle1", "I have a bike");
+            createCheckboxInput("vehicle2", "I have a car");
+            createCheckboxInput("vehicle3", "I have a boat");
+        }
+
+        function createTextInput(id, label) {
+            document.getElementById("body").innerHTML += /*HTML*/ `
+                <label for=${id}>${label}</label><br>
+                <input type="text" id="${id}"><br>
+            `;
+        }
+
+        function createRangeInput(id, label, rangeStart, rangeEnd, step) {
+            document.getElementById("body").innerHTML += /*HTML*/ `
+                <label for=${id}>${label}</label><br>
+                <input type="range" min=${rangeStart} max=${rangeEnd} step=${step} id=${id}><br>
+            `;
+        }
+        
+        function createNumberInput(id, label) {
+            document.getElementById("body").innerHTML += /*HTML*/ `
+                <label for=${id}>${label}</label><br>
+                <input type="number" id="${id}"><br>
+            `;
+        }
+
+        function createRadioInput(id, label, name) {
+            document.getElementById("body").innerHTML += /*HTML*/ `
+                <input type="radio" id="${id}" name="${name}">
+                <label for="${id}">${label}</label><br>
+            `;
+        }
+
+        function createCheckboxInput(id, label) {
+            document.getElementById("body").innerHTML += /*HTML*/ `
+                <input type="checkbox" id="${id}">
+                <label for="${id}">${label}</label><br>
+            `;
+        }
+    </script>
+</head>
+<body id="body">
+    <script>form()</script>
+</body>
+</html>
