@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp tabell</title>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+    <script>
+        function tempTable() {
+            document.getElementById("body").innerHTML = /*HTML*/ `<table id="myTable"></table> `;
+
+            addRow("th", "Dag", "Time", "Minutt", "Temperatur");
+            addRow("td", 1, 10, 0, 5);
+            addRow("td", 1, 10, 15, 6);
+            addRow("td", 1, 10, 30, 7);
+        }
+
+        function addRow(cellTag, day, hour, minute, temperature) {
+            document.getElementById('myTable').innerHTML += /*HTML*/ `
+            <tr>
+                <${cellTag}>${day}</${cellTag}>
+                <${cellTag}>${hour}</${cellTag}>
+                <${cellTag}>${minute}</${cellTag}>
+                <${cellTag}>${temperature}</${cellTag}>
+            </tr>
+            `;
+        }
+    </script>
+</head>
+<body id="body">
+    <script>tempTable()</script>
+</body>
+</html>
