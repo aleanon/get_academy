@@ -4,35 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        /* * {
-            box-sizing: border-box;
-        } */
-
-        body {
-            background-color: brown;
+        html body {
+            height: 100%;
+            margin: 0;
         }
 
-        div.flex-box {
-            display: inline-flex;
-            background-color: coral;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        div.space {
-            background-color: chocolate;
+        .grid {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 5fr 3fr 5fr;
             width: 100%;
-            height: 1fr;
+            height: 100vh;
         }
+
 
         div.number-box {
+            grid-column: 2;
+            grid-row: 2;
             display: flex;
             flex-direction: row;
             width: 100%;
-            height: 1fr;  
+            height: 100%;  
             justify-content: center;
-            background-color: aqua;
         }
 
         div.buttons {
@@ -42,35 +37,35 @@
 
         div.number {
             font-size: 300px;
-            background-color: aquamarine;
         }
 
         div.buttons {
             display: flex;
             justify-content: center;
-            background-color: blue;
-            width: 200px;
+            width: 100%;
             padding: 20px 40px;
+            margin-left: 20px;
         }
 
         button {
+            width: 200px;
             height: 100%;
             border: solid 3px grey;
             border-radius: 10px;
+            font-size: 80px;
         }
     </style>
 </head>
 <body>
-<div class="flex-box">
-    <div class="space"><span></span></div>
+
+    <div class="grid">
     <div class="number-box">
         <div class="number">5</div>
         <div class="buttons">
-            <button></button>
-            <button></button>
+            <button><i class='fa fa-caret-up'></i></button>
+            <button><i class='fa fa-caret-down'></i></button>
         </div>
     </div> 
-    <div class="space"><span></span></div>
-</div>
+    </div>
 </body>
 </html>
