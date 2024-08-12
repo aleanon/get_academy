@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         function drawBoard() {
-            let board = document.getElementById("board");
-            drawHouse(board, "green");
-            drawPath(board, "yellow", "up");
-            drawHouse(board, "yellow");
-            drawPath(board, "green", "left");
-            board.innerHTML += /*HTML*/ `<div class="home"></div>`;
-            drawPath(board, "blue", "right");
-            drawHouse(board, "red");
-            drawPath(board, "red", "down");
-            drawHouse(board, "blue")
+            document.getElementById("body").innerHTML += /*HTML*/ `
+                <div id="board">
+                    ${drawHouse("green")}
+                    ${drawPath("yellow", "up")}
+                    ${drawHouse("yellow")}
+                    ${drawPath("green", "left")}
+                    <div class="home"></div>
+                    ${drawPath("blue", "right")}
+                    ${drawHouse("red")}
+                    ${drawPath("red", "down")}
+                    ${drawHouse("blue")}                
+                </div>
+            `;
         }
 
-        function drawHouse(board, color) {
-            board.innerHTML += /*HTML*/ `
+        function drawHouse(color) {
+            return /*HTML*/ `
                 <div class="house ${color}">
                     ${insertColoredCells(4, color)}
                 </div>
@@ -28,8 +31,8 @@
         }
 
         /// Draws the path in a direction from "home"
-        function drawPath(board, color, direction) {
-            board.innerHTML += /*HTML*/ `
+        function drawPath(color, direction) {
+            return /*HTML*/ `
                 <div class="path ${direction}">
                     ${insertHtmlLeftUp(direction, color)}
                     ${insertEmptyCells(5)}
@@ -78,9 +81,7 @@
 
     </script>
 </head>
-<body>
-    <div id="board">
-        <script>drawBoard()</script>
-    </div>
+<body id="body">
+    <script>drawBoard()</script>
 </body>
 </html>
