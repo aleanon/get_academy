@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function drawBoard() {
+            let board = document.getElementById("board");
+            drawHouse(board, "green");
+            drawPath(board, "yellow", "up");
+            drawHouse(board, "yellow");
+            drawPath(board, "green", "left");
+            board.innerHTML += /*HTML*/ `<div class="home"></div>`;
+            drawPath(board, "blue", "right");
+            drawHouse(board, "red");
+            drawPath(board, "red", "down");
+            drawHouse(board, "blue")
+        }
+
+        function drawHouse(board, color) {
+            board.innerHTML += /*HTML*/ `
+                <div class="house ${color}">
+                    ${insertColoredCells(4, color)}
+                </div>
+            `;
+        }
+
+        /// Draws the path in a direction from "home"
+        function drawPath(board, color, direction) {
+            board.innerHTML += /*HTML*/ `
+                <div class="path ${direction}">
+                    ${insertHtmlLeftUp(direction, color)}
+                    ${insertEmptyCells(5)}
+                    ${insertColoredCells(5, color)}
+                    ${insertEmptyCells(5)}
+                    ${insertHtmlRightDown(direction, color)}
+                </div>
+            `;
+        }
+
+        function insertEmptyCells(numberOfCells) {
+            let html = "";
+            for (let i = 0; i < numberOfCells; i++) {
+                html += `<div class="cell"></div>`;
+            }
+            return html;
+        } 
+
+        function insertColoredCells(numberOfCells, color) {
+            let html = "";
+            for (let i = 0; i < numberOfCells; i++) {
+                html += `<div class="cell ${color}"></div>`;
+            }
+            return html;
+        }
+
+        function insertHtmlLeftUp(direction, color)  {
+            if (direction == "left" || direction == "up") {
+                return `
+                    <div class="cell"></div>
+                    <div class="cell start ${color}"></div>
+                `;
+            }
+            return `<div class="cell"></div>`;
+        }
+        
+        function insertHtmlRightDown(direction, color) {
+            if (direction == "right" || direction == "down") {
+                return `
+                    <div class="cell start green ${color}"></div>
+                    <div class="cell"></div>
+                `;
+            }
+            return `<div class="cell"></div>`;
+        }
+
+    </script>
+</head>
+<body>
+    <div id="board">
+        <script>drawBoard()</script>
+    </div>
+</body>
+</html>
