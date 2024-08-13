@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skriftstørrelse</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            height: 60vh;
+        }
+    </style>
+
+
+    <script>
+        let size = 16;
+        function draw() {
+            document.body.style.fontSize = size;
+            document.body.innerHTML = /*HTML*/ `
+            <p id="text" style="font-size: ${size}px">Endre størrelse på denne</p>
+            <div id="knapper">
+                <button onclick="increaseSize()">Større text</button>
+                <button onclick="decreaseSize()">Mindre text</button>
+            </div>
+            `;
+        }
+
+
+        function increaseSize() {
+            size++;
+            document.getElementById("text").style.fontSize = `${size}px`;
+        }
+
+        function decreaseSize() {
+            size--;
+            document.getElementById("text").style.fontSize = `${size}px`;
+        }
+    </script>
+</head>
+
+<body>
+    <script>draw()</script>
+</body>
+
+</html>
