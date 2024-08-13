@@ -72,19 +72,18 @@
 
         function showBoard() {
             // del 1: alle rutene som ikke er valgt før den valgte
-            const lengthPart1 = selectedSquareIndex;
-            const pattern = '<div></div>';
-            const part1 = ''.padEnd(pattern.length * lengthPart1, pattern)
-            document.getElementById('board').innerHTML = part1;
+            document.getElementById('board').innerHTML = '';
+            addSquares(selectedSquareIndex)
 
             // del 2: den valgte ruten
-            const part2 = '<div class="selected"></div>';
-            document.getElementById('board').innerHTML += part2;
+            document.getElementById('board').innerHTML += /*HTML*/`<div class="selected"></div>`;
 
             // del 3  alle rutene som ikke er valgt etter den valgte
-            const lengthPart3 = size - (selectedSquareIndex + 1);
-            const part3 = ''.padEnd(pattern.length * lengthPart3, pattern)
-            document.getElementById('board').innerHTML += part3;
+            addSquares(size - (selectedSquareIndex + 1))
+        }
+
+        function addSquares(numberOfSquares) {
+            document.getElementById('board').innerHTML += /*HTML*/`<div></div>`.repeat(numberOfSquares)
         }
 
         function moveUp() {

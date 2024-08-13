@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Draw</title>
 </head>
+
 <body>
     <button onclick="addCircleFromInput()">Legg til sirkel</button>
     <button onclick="addRectangleFromInput()">Legg til rektangel</button>
@@ -30,20 +32,16 @@
         <option value="black">Black</option>
         <option value="grey">Grey</option>
     </select>
-    <br/>,
-    <svg 
-      id="mySvg"
-      width="800" 
-      height="600" 
-      style="background-color: lightgray;">
+    <br />,
+    <svg id="mySvg" width="800" height="600" style="background-color: lightgray;">
     </svg>
     <script>
         function addCircleFromInput() {
             addCircle(
-               document.getElementById("x-number-input").value,
-               document.getElementById("y-number-input").value,
-               document.getElementById("select-background").value,
-               document.getElementById("select-foreground").value
+                document.getElementById("x-number-input").value,
+                document.getElementById("y-number-input").value,
+                document.getElementById("select-background").value,
+                document.getElementById("select-foreground").value
             )
         }
 
@@ -67,6 +65,7 @@
                 <rect x=${x} y=${y} width="80" height="100" stroke=${foreground} fill=${background} />
             `;
         }
-    </script> 
+    </script>
 </body>
+
 </html>
