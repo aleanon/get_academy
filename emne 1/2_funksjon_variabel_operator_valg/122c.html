@@ -14,10 +14,9 @@
             height: 60vh;
         }
     </style>
-
-
     <script>
         let currentFontSize = 16;
+
         function draw() {
             document.body.innerHTML = /*HTML*/ `
             <p id="text" style="font-size: ${currentFontSize}px">Endre størrelse på denne</p>
@@ -27,7 +26,6 @@
             </div>
             `;
         }
-
 
         function increaseSize() {
             currentFontSize++;

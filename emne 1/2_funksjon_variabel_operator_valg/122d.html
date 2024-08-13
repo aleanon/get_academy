@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skriftstørrelse</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            height: 60vh;
+        }
+
+        #text {
+            padding-top: 30px;
+        }
+
+        #input {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    </style>
+    <script>
+        let currentFontSize = 16;
+
+        function draw() {
+            document.body.innerHTML = /*HTML*/ `
+            <p id="text" style="font-size: ${currentFontSize}px">Endre størrelse på denne</p>
+            <div id="input">
+                <div id="knapper">
+                    <button onclick="increaseSize()">Større text</button>
+                    <button onclick="decreaseSize()">Mindre text</button>
+                </div>
+                <select onchange="selectFontFamily(this.value)">
+                    <option>Arial</option>
+                    <option>Verdana</option>
+                    <option>Tahoma</option>
+                    <option>Trebuchet MS</option>
+                    <option>Times New Roman</option>
+                    <option>Georgia</option>
+                    <option>Garamond</option>
+                    <option>Courier New</option>
+                    <option>Brush Script MT</option>
+                </select>
+            </div>
+            `;
+        }
+
+        function increaseSize() {
+            currentFontSize++;
+            document.getElementById("text").style.fontSize = `${currentFontSize}px`;
+        }
+
+        function decreaseSize() {
+            currentFontSize--;
+            document.getElementById("text").style.fontSize = `${currentFontSize}px`;
+        }
+
+        function selectFontFamily(fontFamily) {
+            document.getElementById("text").style.fontFamily = fontFamily;
+        }
+    </script>
+</head>
+
+<body>
+    <script>draw()</script>
+</body>
+
+</html>
