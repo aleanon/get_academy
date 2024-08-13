@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            gap: 10px;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            height: 70%;
+            aspect-ratio: 1/1;
+            background-color: lightgray;
+        }
+
+        #board>div {
+            border: 1px solid lightblue;
+        }
+
+        .selected {
+            background-color: yellow;
+        }
+
+        #buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            aspect-ratio: 1/1;
+        }
+
+        button {
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="board"></div>
+    <div id="buttons">
+        <div></div>
+        <button id="up" onclick="moveUp()">🠹</button>
+        <div></div>
+        <button id="left" onclick="moveLeft()">🠸</button>
+        <div></div>
+        <button onclick="moveRight()">🠺</button>
+        <div></div>
+        <button onclick="moveDown()">🠻</button>
+        <div></div>
+    </div>
+    <script>
+        let selectedSquareIndex = 7;
+        const size = 64;
+
+        showBoard();
+
+        function showBoard() {
+            // del 1: alle rutene som ikke er valgt før den valgte
+            const lengthPart1 = selectedSquareIndex;
+            const pattern = '<div></div>';
+            const part1 = ''.padEnd(pattern.length * lengthPart1, pattern)
+            document.getElementById('board').innerHTML = part1;
+
+            // del 2: den valgte ruten
+            const part2 = '<div class="selected"></div>';
+            document.getElementById('board').innerHTML += part2;
+
+            // del 3  alle rutene som ikke er valgt etter den valgte
+            const lengthPart3 = size - (selectedSquareIndex + 1);
+            const part3 = ''.padEnd(pattern.length * lengthPart3, pattern)
+            document.getElementById('board').innerHTML += part3;
+        }
+
+        function moveUp() {
+            if (selectedSquareIndex > 7) {
+                selectedSquareIndex -= 8;
+                showBoard()
+            }
+        }
+        function moveRight() {
+            if (selectedSquareIndex % 8 != 7) {
+                selectedSquareIndex++;
+                showBoard()
+            }
+        }
+
+        function moveLeft() {
+            if (selectedSquareIndex % 8 != 0) {
+                selectedSquareIndex--;
+                showBoard();
+            }
+        }
+
+        function moveDown() {
+            if (selectedSquareIndex < size - 8) {
+                selectedSquareIndex += 8;
+                showBoard()
+            }
+        }
+
+    </script>

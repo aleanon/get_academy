@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Form</title>
     <style>
         #app {
             display: grid;
@@ -29,12 +30,12 @@
             margin-right: 5px;
         }
 
-        
-        input[name="fav_language"] ~ br:nth-of-type(2) {
+
+        input[name="fav_language"]~br:nth-of-type(2) {
             grid-column: span 2;
             justify-self: start;
         }
-        
+
         label {
             grid-column: 1;
             grid-row-start: 7 3;
@@ -45,27 +46,27 @@
             grid-column: 2;
             grid-row-start: 7 3;
         }
-
     </style>
 </head>
+
 <body>
     <div id="app">
         <h3>Mitt skjema</h3>
-        First Name<br/> <input type="text" id="fname"><br/>
-        Last Name<br/> <input type="text" id="lname"><br/>
-        En til hundre<br/> <input type="range" id="zero2hundred"><br/>
-        Skriv inn et tall<br/> <input type="number" id="lname"><br/>
-        Favorittspråk:<br/>
+        First Name<br /> <input type="text" id="fname"><br />
+        Last Name<br /> <input type="text" id="lname"><br />
+        En til hundre<br /> <input type="range" id="zero2hundred"><br />
+        Skriv inn et tall<br /> <input type="number" id="lname"><br />
+        Favorittspråk:<br />
         <input type="radio" name="fav_language" id="html">
         <label for="html">HTML</label>
-        <br/>
+        <br />
         <input type="radio" name="fav_language" id="css">
         <label for="css">CSS</label>
-        <br/>
+        <br />
         <input type="radio" name="fav_language" id="js">
         <label for="js">JavaScript</label>
-        <br/>
+        <br />
     </div>
 </body>
-</html>
 
+</html>

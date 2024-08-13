@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,15 +44,15 @@
         }
 
         function insertEmptyCells(numberOfCells) {
-            return "<div class=\"cell\"></div>".repeat(numberOfCells)
-        } 
-
-        function insertColoredCells(numberOfCells, color) {
-            return `<div class="cell ${color}"></div>`.toString().repeat(numberOfCells);
+            return `<div class="cell"></div>`.repeat(numberOfCells)
         }
 
-        function insertStartForGreenAndYellow(color)  {
-            if (color == "green" || color == "yellow") {
+        function insertColoredCells(numberOfCells, color) {
+            return `<div class="cell ${color}"></div>`.repeat(numberOfCells);
+        }
+
+        function insertStartForGreenAndYellow(color) {
+            if (color === "green" || color === "yellow") {
                 return `
                     <div class="cell"></div>
                     <div class="cell start ${color}"></div>
@@ -59,9 +60,9 @@
             }
             return `<div class="cell"></div>`;
         }
-        
+
         function insertStartForBlueAndRed(color) {
-            if (color == "blue" || color == "red") {
+            if (color === "blue" || color === "red") {
                 return `
                     <div class="cell start ${color}"></div>
                     <div class="cell"></div>
@@ -72,7 +73,9 @@
 
     </script>
 </head>
+
 <body id="body">
     <script>drawBoard()</script>
 </body>
+
 </html>

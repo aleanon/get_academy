@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Page layout</title>
     <style>
         * {
             margin: 0;
         }
-       
+
         .grid {
             height: 100vh;
             display: grid;
             grid-template-rows: 50px auto 30px;
             grid-template-columns: 200px auto;
-            grid-template-areas: 
-            "head head"
-            "nav main"
-            "footer footer";
+            grid-template-areas:
+                "head head"
+                "nav main"
+                "footer footer";
         }
 
         header {
@@ -40,18 +41,19 @@
             grid-area: footer;
             background-color: lightpink;
         }
-
     </style>
 </head>
+
 <body>
     <div class="grid">
-    <header>header</header>
-    
-    <nav>meny</nav>
+        <header>header</header>
 
-    <main>main</main>
+        <nav>meny</nav>
 
-    <footer>footer</footer>
+        <main>main</main>
+
+        <footer>footer</footer>
     </div>
 </body>
+
 </html>
