@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>122D</title>
+    <title>122E</title>
     <style>
         body {
             display: flex;
@@ -15,7 +15,7 @@
         }
 
         #text {
-            padding-top: 30px;
+            margin-top: 30px;
         }
 
         #input {
@@ -23,15 +23,31 @@
             flex-direction: column;
             gap: 20px;
         }
+
+        #size-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #color-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-auto-flow: column;
+
+        }
     </style>
     <script>
         let currentFontSize = 16;
+        let redValue = 125;
+        let greenValue = 125;
+        let blueValue = 125;
 
         function draw() {
             document.body.innerHTML = /*HTML*/ `
-            <p id="text" style="font-size: ${currentFontSize}px">Endre størrelse på denne</p>
+            <div id="text" style="font-size: ${currentFontSize}px">Endre størrelse på denne</div>
             <div id="input">
-                <div id="knapper">
+                <div id="size-buttons">
                     <button onclick="increaseSize()">Større text</button>
                     <button onclick="decreaseSize()">Mindre text</button>
                 </div>
@@ -46,8 +62,17 @@
                     <option>Courier New</option>
                     <option>Brush Script MT</option>
                 </select>
+                <div id="color-buttons">
+                    <button onclick="increaseRed()">Mer rød</button>    
+                    <button onclick="decreaseRed()">Mindre rød</button>
+                    <button onclick="increaseGreen()">Mer grønn</button>
+                    <button onclick="decreaseGreen()">Mindre grønn</button>
+                    <button onclick="increaseBlue()">Mer blå</button>
+                    <button onclick="decreaseBlue()">Mindre blå</button>
+                </div>
             </div>
             `;
+            updateBackground();
         }
 
         function increaseSize() {
@@ -62,6 +87,35 @@
 
         function selectFontFamily(fontFamily) {
             document.getElementById("text").style.fontFamily = fontFamily;
+        }
+
+        function increaseRed() {
+            redValue += 5;
+            updateBackground();
+        }
+        function decreaseRed() {
+            redValue -= 5;
+            updateBackground();
+        }
+        function increaseGreen() {
+            greenValue += 5;
+            updateBackground();
+        }
+        function decreaseGreen() {
+            greenValue -= 5;
+            updateBackground()
+        }
+        function increaseBlue() {
+            blueValue += 5;
+            updateBackground();
+        }
+        function decreaseBlue() {
+            blueValue -= 5;
+            updateBackground();
+        }
+
+        function updateBackground() {
+            document.getElementById("text").style.backgroundColor = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
         }
     </script>
 </head>
