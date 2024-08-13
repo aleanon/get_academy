@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         function drawBoard() {
-            document.getElementById("body").innerHTML += /*HTML*/ `
+            document.body.innerHTML = /*HTML*/ `
                 <div id="board">
                     ${drawHouse("green")}
-                    ${drawPath("yellow", "up")}
+                    ${drawPath("yellow")}
                     ${drawHouse("yellow")}
-                    ${drawPath("green", "left")}
+                    ${drawPath("green")}
                     <div class="home"></div>
-                    ${drawPath("blue", "right")}
+                    ${drawPath("blue")}
                     ${drawHouse("red")}
-                    ${drawPath("red", "down")}
+                    ${drawPath("red")}
                     ${drawHouse("blue")}                
                 </div>
             `;
@@ -30,37 +30,28 @@
             `;
         }
 
-        /// Draws the path in a direction from "home"
-        function drawPath(color, direction) {
+        function drawPath(color) {
             return /*HTML*/ `
-                <div class="path ${direction}">
-                    ${insertHtmlLeftUp(direction, color)}
+                <div class="path ${color}">
+                    ${insertStartForGreenAndYellow(color)}
                     ${insertEmptyCells(5)}
                     ${insertColoredCells(5, color)}
                     ${insertEmptyCells(5)}
-                    ${insertHtmlRightDown(direction, color)}
+                    ${insertStartForBlueAndRed(color)}
                 </div>
             `;
         }
 
         function insertEmptyCells(numberOfCells) {
-            let html = "";
-            for (let i = 0; i < numberOfCells; i++) {
-                html += `<div class="cell"></div>`;
-            }
-            return html;
+            return "<div class=\"cell\"></div>".repeat(numberOfCells)
         } 
 
         function insertColoredCells(numberOfCells, color) {
-            let html = "";
-            for (let i = 0; i < numberOfCells; i++) {
-                html += `<div class="cell ${color}"></div>`;
-            }
-            return html;
+            return `<div class="cell ${color}"></div>`.toString().repeat(numberOfCells);
         }
 
-        function insertHtmlLeftUp(direction, color)  {
-            if (direction == "left" || direction == "up") {
+        function insertStartForGreenAndYellow(color)  {
+            if (color == "green" || color == "yellow") {
                 return `
                     <div class="cell"></div>
                     <div class="cell start ${color}"></div>
@@ -69,10 +60,10 @@
             return `<div class="cell"></div>`;
         }
         
-        function insertHtmlRightDown(direction, color) {
-            if (direction == "right" || direction == "down") {
+        function insertStartForBlueAndRed(color) {
+            if (color == "blue" || color == "red") {
                 return `
-                    <div class="cell start green ${color}"></div>
+                    <div class="cell start ${color}"></div>
                     <div class="cell"></div>
                 `;
             }
