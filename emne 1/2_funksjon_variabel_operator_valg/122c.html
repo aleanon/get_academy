@@ -17,11 +17,10 @@
 
 
     <script>
-        let size = 16;
+        let currentFontSize = 16;
         function draw() {
-            document.body.style.fontSize = size;
             document.body.innerHTML = /*HTML*/ `
-            <p id="text" style="font-size: ${size}px">Endre størrelse på denne</p>
+            <p id="text" style="font-size: ${currentFontSize}px">Endre størrelse på denne</p>
             <div id="knapper">
                 <button onclick="increaseSize()">Større text</button>
                 <button onclick="decreaseSize()">Mindre text</button>
@@ -31,13 +30,13 @@
 
 
         function increaseSize() {
-            size++;
-            document.getElementById("text").style.fontSize = `${size}px`;
+            currentFontSize++;
+            document.getElementById("text").style.fontSize = `${currentFontSize}px`;
         }
 
         function decreaseSize() {
-            size--;
-            document.getElementById("text").style.fontSize = `${size}px`;
+            currentFontSize--;
+            document.getElementById("text").style.fontSize = `${currentFontSize}px`;
         }
     </script>
 </head>
