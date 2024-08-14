@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>123B</title>
+    <script>
+        function updateBackground(value) {
+            console.log(value);
+            if (value < 30) {
+                document.getElementById("box").style.backgroundColor = "red";
+            } else if (value > 70) {
+                document.getElementById("box").style.backgroundColor = "green";
+            } else {
+                document.getElementById("box").style.backgroundColor = "yellow";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="box" style="background-color: red;">
+        <input type="range" min="0" max="100" step="1" value="0" onchange="updateBackground(this.value)">
+    </div>
+</body>
+
+</html>
