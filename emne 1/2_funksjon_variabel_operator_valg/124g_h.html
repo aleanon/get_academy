@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>124G</title>
+    <script>
+        function createNumberSelector(value, minAllowed, maxAllowed, selectorName) {
+            let incrementTo = value + 1;
+            let decrementTo = value - 1;
+
+            let disableIncrement = incrementTo > maxAllowed;
+            let disableDecrement = decrementTo < minAllowed;
+
+            return /*HTML*/ `
+                <div id="${selectorName}Main" style="display: flex;align-items: center;">
+                    <div id="${selectorName}" style="font-size: 300%;">${value}</div>
+                    <div style="display: flex; flex-direction: column;align-items: flex-start;">
+                        ${createButton(selectorName, incrementTo, disableIncrement, "▲")}
+                        ${createButton(selectorName, decrementTo, disableDecrement, "▼")}
+                    </div>
+                </div>
+            `;
+        }
+
+        function createButton(selectorName, newValue, isDisabled, text) {
+            if (isDisabled) {
+                return /*HTML*/ `<button onclick="select${selectorName}(${newValue}) disabled">${text}</button>`;
+            } else {
+                return /*HTML*/ `<button onclick="select${selectorName}(${newValue})">${text}</button>`;
+            }
+        }
+
+        function showDateSelector() {
+            document.getElementById("app").innerHTML =
+                createNumberSelector(13, 1, 31, "Day")
+                + createNumberSelector(8, 1, 12, "Month")
+                + createNumberSelector(2023, 2020, 2025, "Year");
+        }
+
+        function selectDay(value) {
+            document.getElementById("DayMain").outerHTML = createNumberSelector(value, 1, 31, "Day")
+        }
+
+        function selectMonth(value) {
+            document.getElementById("MonthMain").outerHTML = createNumberSelector(value, 1, 12, "Month")
+        }
+
+        function selectYear(value) {
+            document.getElementById("YearMain").outerHTML = createNumberSelector(value, 2000, 2023, "Year")
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <script>showDateSelector()</script>
+    </div>
+</body>
+
+</html>
