@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>124B</title>
+    <script>
+        function draw(celcius, fahrenheit) {
+            let calculatedFahrenheit = celciusToFahrenheit(celcius);
+            let calculatedCelsius = fahrenheitToCelsius(fahrenheit);
+            document.getElementById("temp").innerHTML = /*HTML*/ `
+                <div>Fahrenheit: ${calculatedFahrenheit}</div>
+                <div>Celcius: ${calculatedCelsius}</div>
+                ${createDiv("Hei", "white", "blue")}
+                ${createDiv("Hei", "blue")}
+                ${createDiv("Hei")}
+                ${createGrid(3, 2,
+                createDiv('Kol 1 rad 1')
+                + createDiv('Kol 2 rad 1')
+                + createDiv('Kol 3 rad 1')
+                + createDiv('Kol 1 rad 2')
+                + createDiv('Kol 2 rad 2')
+                + createDiv('Kol 3 rad 2')
+            )}
+                ${createGrid2(3, 2)}
+            `;
+        }
+
+        function celciusToFahrenheit(celcius) {
+            return celcius * 9 / 5 + 32
+        }
+
+        function fahrenheitToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5 / 9
+        }
+
+        function convertTemperature(temperature, isCelsius) {
+            if (isCelsius) {
+                return fahrenheitToCelsius(temperature);
+            } else {
+                return celciusToFahrenheit(temperature);
+            }
+        }
+
+        function createDiv(text, foregroundColor, backgroundColor) {
+            if (foregroundColor == undefined && backgroundColor == undefined) {
+                return /*HTML*/ `<div>${text}</div>`;
+            }
+            return /*HTML*/ `<div style="background-color: ${backgroundColor}; color: ${foregroundColor}">${text}</div>`;
+        }
+
+        function createGrid(columnCount, rowCount, innerHTML) {
+            return /*HTML*/ `
+                <div style="display: grid; grid-template-columns: repeat(${columnCount}, auto); grid-template-rows: repeat(${rowCount}, auto)">
+                    ${innerHTML}
+                </div>
+            `;
+        }
+
+        function createGrid2(columnCount, rowCount) {
+            return /*HTML*/ `
+                <div style="display: grid; grid-template-columns: repeat(${columnCount}, auto); grid-template-rows: repeat(${rowCount}, auto)">
+                    ${createColumnsAndRows(columnCount, rowCount)}
+                </div>
+            `;
+        }
+
+        function createColumnsAndRows(columnCount, rowCount) {
+            let html = "";
+            for (let rowIndex = 1; rowIndex <= rowCount; rowIndex++) {
+                for (let columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                    html += /*HTML*/ `<div>Kol ${columnIndex} rad ${rowIndex}</div>`
+                }
+            }
+            return html;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="temp">
+        <script>draw(30, 86)</script>
+    </div>
+</body>
+
+</html>
