@@ -50,31 +50,17 @@ body {
     display: grid;
 }
 
-.path.blue{
+#blue-path, #green-path {
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
 
-.path.red{
+#yellow-path, #red-path {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(6, 1fr);
     grid-auto-flow: column;
     direction: rtl;
 }
-
-.path.green{
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-}
-
-
-.path.yellow{
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    grid-auto-flow: column;
-    direction: rtl;
-}
-
 
 .cell {
     border: solid white 1px;

@@ -10,20 +10,23 @@
         function drawBoard() {
             document.body.innerHTML = /*HTML*/ `
                 <div id="board">
-                    ${drawHouse("green")}
-                    ${drawPath("yellow")}
-                    ${drawHouse("yellow")}
-                    ${drawPath("green")}
+                    ${createHouse("green")}
+                    ${createPath("yellow")}
+                    ${createHouse("yellow")}
+                    ${createPath("green")}
                     <div class="home"></div>
-                    ${drawPath("blue")}
-                    ${drawHouse("red")}
-                    ${drawPath("red")}
-                    ${drawHouse("blue")}                
+                    ${createPath("blue")}
+                    ${createHouse("red")}
+                    ${createPath("red")}
+                    ${createHouse("blue")}
                 </div>
             `;
+
+            reverseOrderOfChildren("green-path");
+            reverseOrderOfChildren("yellow-path");
         }
 
-        function drawHouse(color) {
+        function createHouse(color) {
             return /*HTML*/ `
                 <div class="house ${color}">
                     ${insertColoredCells(4, color)}
@@ -31,51 +34,39 @@
             `;
         }
 
-        function drawPath(color) {
+        function createPath(color) {
             return /*HTML*/ `
-                <div class="path ${color}">
-                    ${insertStartForGreenAndYellow(color)}
-                    ${insertEmptyCells(5)}
+                <div id="${color}-path" class="path">
+                    ${insertEmptyCells(6)}
                     ${insertColoredCells(5, color)}
                     ${insertEmptyCells(5)}
-                    ${insertStartForBlueAndRed(color)}
+                    <div class="cell start ${color}"></div>
+                    ${insertEmptyCells(1)}
                 </div>
             `;
         }
 
+        function reverseOrderOfChildren(id) {
+            let htmlElement = document.getElementById(id);
+            let items = Array.from(htmlElement.children);
+            items.reverse().forEach(item => htmlElement.appendChild(item));
+        }
+
         function insertEmptyCells(numberOfCells) {
-            return `<div class="cell"></div>`.repeat(numberOfCells)
+            return /*HTML*/ `<div class="cell"></div> `.repeat(numberOfCells)
         }
 
         function insertColoredCells(numberOfCells, color) {
-            return `<div class="cell ${color}"></div>`.repeat(numberOfCells);
-        }
-
-        function insertStartForGreenAndYellow(color) {
-            if (color === "green" || color === "yellow") {
-                return `
-                    <div class="cell"></div>
-                    <div class="cell start ${color}"></div>
-                `;
-            }
-            return `<div class="cell"></div>`;
-        }
-
-        function insertStartForBlueAndRed(color) {
-            if (color === "blue" || color === "red") {
-                return `
-                    <div class="cell start ${color}"></div>
-                    <div class="cell"></div>
-                `;
-            }
-            return `<div class="cell"></div>`;
+            return /*HTML*/ `<div class="cell ${color}"></div>`.repeat(numberOfCells);
         }
 
     </script>
 </head>
 
-<body id="body">
-    <script>drawBoard()</script>
+<body>
+    <script>
+        drawBoard();
+    </script>
 </body>
 
 </html>

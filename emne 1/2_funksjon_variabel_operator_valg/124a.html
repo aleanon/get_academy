@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>124A</title>
+    <script>
+        function ordreLinje(vareNavn, pris, antall) {
+            document.body.innerHTML = /*HTML*/ `
+                <div class="ordrelinje">${antall} stk ${vareNavn} a ${pris} = ${antall * pris}</div>
+            `;
+        }
+    </script>
+</head>
+
+<body>
+    <script>ordreLinje("Tastatur", "129", "3")</script>
+</body>
+
+</html>
