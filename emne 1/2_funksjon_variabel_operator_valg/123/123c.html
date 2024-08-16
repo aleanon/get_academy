@@ -2,6 +2,21 @@
 
 <head>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 13rem;
+            width: 3rem;
+            gap: 1rem;
+        }
+
         div.trafficLight {
             width: 3rem;
             height: 10rem;
@@ -10,6 +25,7 @@
             background-color: black;
             padding: 1rem;
             gap: 1rem;
+            border-radius: 1rem;
         }
 
         div.light {
@@ -18,46 +34,40 @@
             width: 3rem;
             height: 3rem;
         }
+
+        button {
+            width: 5rem;
+            background-color: blue;
+            color: white;
+            border-radius: 1rem;
+        }
     </style>
-</head>
-
-<body>
-    <div id="app">
-    </div>
-
     <script>
-        let phase = 0
-
-        drawTrafficLight()
+        let phase = 0;
 
         function drawTrafficLight() {
-            let trafficLight = createTrafficLight(phase == 0 || phase == 1, phase == 1 || phase == 3, phase == 2)
-
             document.getElementById("app").innerHTML = /*HTML*/ `
-                ${trafficLight}
+                ${createTrafficLight()}
                 <button onclick="goToNextPhase()">Neste</button>
+            `;
+        }
+
+        function createTrafficLight() {
+            let color1 = isRed() ? 'red' : 'gray'
+            let color2 = isYellow() ? 'yellow' : 'gray';
+            let color3 = isGreen() ? 'green' : 'gray';
+
+            return /*HTML*/`
+                <div class="trafficLight">
+                    ${createLightDiv(color1)}
+                    ${createLightDiv(color2)}
+                    ${createLightDiv(color3)}
+                </div>
             `;
         }
 
         function createLightDiv(color) {
             return /*HTML*/`<div class="light" style="background-color: ${color};"></div>`;
-        }
-
-        function createTrafficLight(isRed, isYellow, isGreen) {
-            let color1 = 'gray';
-            let color2 = 'gray';
-            let color3 = 'gray';
-            if (isRed) color1 = 'red';
-            if (isYellow) color2 = 'yellow';
-            if (isGreen) color3 = 'green';
-
-            return /*HTML*/`
-            <div class="trafficLight">
-                ${createLightDiv(color1)}
-                ${createLightDiv(color2)}
-                ${createLightDiv(color3)}
-                </div>
-                `;
         }
 
         function goToNextPhase() {
@@ -69,9 +79,25 @@
             drawTrafficLight()
         }
 
+        function isRed() {
+            return phase == 0 || phase == 1
+        }
+
+        function isYellow() {
+            return phase == 1 || phase == 3
+        }
+
+        function isGreen() {
+            return phase == 2
+        }
+
     </script>
+</head>
 
-
+<body>
+    <div id="app">
+        <script>drawTrafficLight()</script>
+    </div>
 </body>
 
 </html>

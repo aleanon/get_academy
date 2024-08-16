@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>128A</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #333;
+        }
+
+        #clicker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 50%;
+        }
+
+        button {
+            border-radius: 1rem;
+            background-color: steelblue;
+            font-weight: bold;
+            width: 12rem;
+            height: 2rem;
+        }
+    </style>
+    <script>
+        let points = 0;
+        let increment = 1;
+
+        function increasePoints() {
+            points += increment
+            update()
+        }
+
+        function upgrade() {
+            if (points >= 10) { increment++; points -= 10 }
+            update()
+        }
+
+        function drawClicker() {
+            document.getElementById("clicker").innerHTML = /*HTML*/ `
+                <h3 id="number">Points: ${points}</h3>
+                <button id="Up" onclick="increasePoints()">Increase</div>
+                <button id="upgrade" onclick="upgrade()" disabled>Upgrade</button>
+            `;
+        }
+
+        function update() {
+            document.getElementById("number").innerHTML = /*HTML*/ `Points: ${points}`;
+            let upgradeButton = document.getElementById("upgrade");
+            if (points >= 10) {
+                upgradeButton.removeAttribute("disabled", true)
+            } else {
+                upgradeButton.setAttribute("disabled", true)
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="clicker">
+        <script>drawClicker()</script>
+    </div>
+</body>
+
+</html>
