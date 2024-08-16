@@ -50,6 +50,17 @@
         function selectYear(value) {
             document.getElementById("YearMain").outerHTML = createNumberSelector(value, 2000, 2023, "Year")
         }
+        function dateAsString() {
+            let day = document.getElementById("Day").innerHTML;
+            let month = document.getElementById("Month").innerHTML;
+            let year = document.getElementById("Year").innerHTML;
+
+            return `${day}.${month}.${year}`
+        }
+
+        function printDate() {
+            document.getElementById("date-output").innerHTML = dateAsString();
+        }
     </script>
 </head>
 
