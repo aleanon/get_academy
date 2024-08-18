@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>128D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightslategray;
+        }
+
+        #app {
+            width: 35vh;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+        }
+
+        #result {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        #buttons {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+        }
+
+        #buttons>button {
+            width: 30%;
+            height: 2rem;
+            border-radius: 1rem;
+            background-color: dodgerblue;
+        }
+
+        #pc,
+        #player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+    </style>
+    <script>
+        let pcPoints;
+        let playerPoints;
+        let info;
+        let pcLastMove;
+        let playerLastMove;
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function initializeGame() {
+            pcPoints = 0;
+            playerPoints = 0;
+            info = "Trykk på en av knappene for å starte spille";
+            pcLastMove = "?";
+            playerLastMove = "?";
+
+            document.getElementById("app").innerHTML = /*html*/ `
+                <h2>Stein Saks Papir</h2>
+                <div id="result">
+                    <div id="player">
+                        <h3>Spiller: <span id="player-points">${playerPoints}</span></h3>
+                        <h3 id="player-move">${playerLastMove}</h3>
+                    </div>
+                    <div id="pc">
+                        <h3>Datamaskin: <span id="pc-points">${pcPoints}</span></h3>
+                        <h3 id="pc-move">${pcLastMove}</h3>
+                    </div>
+                </div>
+                <h4 id="info">${info}</h4>
+                <div id="buttons">
+                    <button id="rock" onclick="rock()">Stein</button>
+                    <button id="siccors" onclick="siccor()">Saks</button>
+                    <button id="paper" onclick="paper()">Papir</button>
+                </div>
+            `;
+        }
+
+        function rock() {
+            let pcMove = getRandomNumber(1, 3);
+            if (pcMove === 1) {
+                info = "Uavgjort";
+            } else if (pcMove === 2) {
+                info = "Du vant";
+                playerPoints++;
+            } else if (pcMove === 3) {
+                info = "Du tapte";
+                pcPoints++;
+            }
+            playerLastMove = "Stein";
+            pcLastMove = numToName(pcMove);
+            updateGame();
+        }
+
+        function siccor() {
+            let pcMove = getRandomNumber(1, 3);
+            if (pcMove === 1) {
+                info = "Du tapte";
+                pcPoints++;
+            } else if (pcMove === 2) {
+                info = "Uavgjort";
+            } else if (pcMove === 3) {
+                info = "Du vant";
+                playerPoints++;
+            }
+            playerLastMove = "Saks";
+            pcLastMove = numToName(pcMove);
+            updateGame();
+        }
+
+        function paper() {
+            let pcMove = getRandomNumber(1, 3);
+            if (pcMove === 1) {
+                info = "Du vant";
+                playerPoints++;
+            } else if (pcMove === 2) {
+                info = "Du tapte";
+                pcPoints++;
+            } else if (pcMove === 3) {
+                info = "Uavgjort";
+            }
+            playerLastMove = "Papir";
+            pcLastMove = numToName(pcMove);
+            updateGame();
+        }
+
+        // function makeMove(playerMove) {
+        //     let pcMove = getRandomNumber(1, 3);
+        //     if (playerMove === 3 && pcMove === 1) {
+        //         info = "Du vant";
+        //         playerPoints++;
+        //     } else if (playerMove === 1 && pcMove === 3) {
+        //         info = "Du tapte";
+        //         pcPoints++;
+        //     } else if (playerMove === pcMove) {
+        //         info = `Uavgjort`;
+        //     } else if (playerMove < pcMove) {
+        //         info = `Du vant`;
+        //         playerPoints++;
+        //     } else if (playerMove > pcMove) {
+        //         info = `Du tapte`
+        //         pcPoints++;
+        //     }
+        //     pcLastMove = numToName(pcMove);
+        //     playerLastMove = numToName(playerMove);
+        //     updateGame();
+        // }
+
+        function updateGame() {
+            document.getElementById("pc-points").textContent = pcPoints;
+            document.getElementById("player-points").textContent = playerPoints;
+            document.getElementById("info").textContent = info;
+            document.getElementById("pc-move").textContent = pcLastMove;
+            document.getElementById("player-move").textContent = playerLastMove;
+        }
+
+        function numToName(num) {
+            switch (num) {
+                case 1: return "Stein";
+                case 2: return "Saks";
+                case 3: return "Papir";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <script>initializeGame()</script>
+    </div>
+</body>
+
+</html>
