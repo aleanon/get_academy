@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>128E</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #game {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 50vh;
+            aspect-ratio: 1/1;
+        }
+
+        .cell {
+            background-color: grey;
+        }
+
+        .selected {
+            background-color: yellow;
+        }
+
+        #time {
+            font-size: 24px;
+        }
+    </style>
+    <script>
+        const gridSize = 4;
+        let timeLastMove;
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function drawGame(selectedCellIndex, timeSpent) {
+            timeLastMove = new Date().getTime();
+            document.getElementById("game").innerHTML = /*HTML*/ `
+                <div id="time">Time last click in seconds:</div>
+                <h1>${timeSpent}</h3>
+                <div id="grid">
+                    ${createGrid(selectedCellIndex)}
+                </div>
+            `;
+        }
+
+        function createGrid(selectedCellIndex) {
+            let html = ``;
+            for (let i = 1; i <= gridSize; i++) {
+                if (i == selectedCellIndex) {
+                    html +=
+                    /*HTML*/ `
+                        <div class="cell selected" onclick="react(${selectedCellIndex})"></div>
+                    `;
+                } else {
+                    html +=
+                    /*HTML*/ `
+                        <div class="cell"></div>
+                    `;
+                }
+            }
+            return html;
+        }
+
+        function react(selectedIndex) {
+            let newSelectedCell = createNewSelectedIndex(selectedIndex);
+            let timeSpent = getTimeSpent();
+            drawGame(newSelectedCell, timeSpent);
+        }
+
+        function createNewSelectedIndex(currentIndex) {
+            let newSelectedCell = currentIndex;
+            while (currentIndex === newSelectedCell) {
+                newSelectedCell = getRandomNumber(1, 4);
+            }
+            return newSelectedCell;
+        }
+
+        function getTimeSpent() {
+            let time = new Date().getTime();
+            let spentTime = time - timeLastMove;
+            return spentTime / 1000;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="game">
+        <script>drawGame(1, "?")</script>
+    </div>
+</body>
+
+</html>
