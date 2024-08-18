@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>128E</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 50vh;
+            aspect-ratio: 1/1;
+        }
+
+        .cell {
+            background-color: grey;
+        }
+
+        .selected {
+            background-color: yellow;
+        }
+    </style>
+    <script>
+        const gridSize = 4;
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function drawGame(selectedCellIndex) {
+            document.getElementById("game").innerHTML = /*HTML*/ `
+                <div id="grid">
+                    ${createGrid(selectedCellIndex)}
+                </div>
+            `;
+        }
+
+        function createGrid(selectedCellIndex) {
+            let html = ``;
+            for (let i = 1; i <= gridSize; i++) {
+                if (i == selectedCellIndex) {
+                    html +=
+                    /*HTML*/ `
+                        <div class="cell selected" onclick="react(${selectedCellIndex})"></div>
+                    `;
+                } else {
+                    html +=
+                    /*HTML*/ `
+                        <div class="cell"></div>
+                    `;
+                }
+            }
+            return html;
+        }
+
+        function react(selectedIndex) {
+            let newSelectedCell = selectedIndex;
+            while (selectedIndex === newSelectedCell) {
+                newSelectedCell = getRandomNumber(1, 4);
+            }
+            drawGame(newSelectedCell);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="game">
+        <script>drawGame(1)</script>
+    </div>
+</body>
+
+</html>
