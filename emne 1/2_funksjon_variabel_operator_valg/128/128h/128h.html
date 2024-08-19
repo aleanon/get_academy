@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>128H</title>
+    <link rel="stylesheet" href="styles.css">
+    </link>
+    <script>
+        let leftcache = "";
+        let rightcache = "";
+        let operation = "";
+        let screen = "0";
+        let equalPressed = false;
+
+        function drawCalculator() {
+            document.getElementById("kalkulator").innerHTML = /*HTML*/ `
+                ${createScreen()}
+                ${createButtonsGrid()}
+            `;
+        }
+
+        function createButtonsGrid() {
+            return /*HTML*/ `
+            <div id="knapper">
+                ${createButton("addToScreen(7)", "7", "enabled")}
+                ${createButton("addToScreen(8)", "8", "enabled")}
+                ${createButton("addToScreen(9)", "9", "enabled")}
+                ${createButton("reset()", "C", "enabled")}
+                ${createButton("addToScreen(4)", "4", "enabled")}
+                ${createButton("addToScreen(5)", "5", "enabled")}
+                ${createButton("addToScreen(6)", "6", "enabled")}
+                ${createButton("operate('*')", "*", "enabled")}
+                ${createButton("addToScreen(1)", "1", "enabled")}
+                ${createButton("addToScreen(2)", "2", "enabled")}
+                ${createButton("addToScreen(3)", "3", "enabled")}
+                ${createButton("operate('/')", "/", "enabled")}
+                ${createButton("operate('-')", "-", "enabled")}
+                ${createButton("addToScreen(0)", "0", "enabled")}
+                ${createButton("operate('+')", "+", "enabled")}
+                ${createButton("equal()", "=", "", "equal", "disabled")}
+            </div>
+            `;
+        }
+
+        function createScreen() {
+            return /*HTML*/ `
+            <div id="screen">
+                <div id="top-screen">
+                    <div id="left-cache"></div>
+                    <div id="operation"></div>
+                    <div id="right-cache"></div>
+                </div>
+                <div id="main-screen">0</div>
+            </div>
+            `;
+        }
+
+        function createButton(onClick, content, group, id, attribute) {
+            return /*HTML*/ `
+                <button onclick="${onClick}" id="${id}" class="${group}" ${attribute}>${content}</button>
+            `;
+        }
+
+        function update() {
+            if (leftcache === "") {
+                document.getElementById("equal").outerHTML = createButton("equal()", "=", "", "equal", "disabled");
+            } else {
+                document.getElementById("equal").outerHTML = createButton("equal()", "=", "enabled", "equal");
+            }
+
+            document.getElementById("main-screen").innerText = screen;
+            document.getElementById("left-cache").innerText = leftcache;
+            document.getElementById("operation").innerText = operation;
+            document.getElementById("right-cache").innerText = rightcache;
+        }
+
+        function addToScreen(nr) {
+            if (equalPressed) {
+                equalPressed = false;
+                screen = nr;
+            } else {
+                screen = screen === "0" ? nr.toString() : screen + nr;
+            }
+            update();
+        }
+
+        function reset() {
+            leftcache = "";
+            rightcache = "";
+            operation = "";
+            screen = "0";
+            equalPressed = false;
+            update();
+        }
+
+        function operate(operator) {
+            if (screen !== "0") {
+                leftcache = screen;
+                screen = "0";
+                operation = operator;
+                update();
+            }
+        }
+
+        function equal() {
+            equalPressed = true;
+            if (rightcache == "") {
+                rightcache = screen;
+            } else {
+                leftcache = screen;
+            }
+            if (operation === "-") {
+                screen = (parseInt(leftcache) - parseInt(rightcache)).toString();
+            } else if (operation === "+") {
+                screen = (parseInt(leftcache) + parseInt(rightcache)).toString();
+            } else if (operation === "/") {
+                screen = (parseInt(leftcache) / parseInt(rightcache)).toString();
+            } else if (operation === "*") {
+                screen = (parseInt(leftcache) * parseInt(rightcache)).toString();
+            }
+            update();
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div id="kalkulator">
+        <script>drawCalculator()</script>
+    </div>
+</body>
+
+</html>
