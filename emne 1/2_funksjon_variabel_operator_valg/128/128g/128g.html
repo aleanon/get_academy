@@ -1,0 +1,59 @@
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        const pieces = ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜", "♟"];
+
+        function drawBoard(board) {
+            document.getElementById("board").innerHTML = /*HTML*/ `
+                ${createSquares()}
+            `;
+        }
+
+        function createSquares() {
+            let html = "";
+            for (let rowIndex = 0; rowIndex < 8; rowIndex++) {
+                for (let squareIndex = 0; squareIndex < 8; squareIndex++) {
+                    html += /*HTML*/ `
+                        <div class="${squareColor(rowIndex, squareIndex)}">${squareContent(rowIndex, squareIndex)}</div>
+                    `;
+                }
+            }
+            return html;
+        }
+
+        function squareContent(rowIndex, squareIndex) {
+            if (rowIndex == 0 || rowIndex == 7) {
+                let pieceColor = rowIndex == 0 ? "black" : "white";
+                return /*HTML*/ `<span class="${pieceColor}">${pieces[squareIndex]}</span>`;
+            } else if (rowIndex == 1 || rowIndex == 6) {
+                let pieceColor = rowIndex == 1 ? "black" : "white";
+                return /*HTML*/ `<span class="${pieceColor}">${pieces[8]}</span>`;
+            } else {
+                return "";
+            }
+        }
+
+        function squareColor(rowIndex, squareIndex) {
+            if (isEven(rowIndex)) {
+                return isEven(squareIndex) ? "lightSquare" : "darkSquare";
+            } else {
+                return isEven(squareIndex) ? "darkSquare" : "lightSquare";
+            }
+        }
+
+        function isEven(number) {
+            return number % 2 == 0;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="board">
+        <script>drawBoard()</script>
+    </div>
+
+</body>
+
+</html>
