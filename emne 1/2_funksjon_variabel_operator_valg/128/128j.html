@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>128J</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #app {
+            width: 50vh;
+            height: 50vh;
+        }
+
+        #puzzle {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 3px;
+            height: 100%;
+            width: 100%;
+            border: solid black 5px;
+            background-color: darkgray;
+            padding: 3px;
+            border-radius: 5%;
+        }
+
+        .square {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 7em;
+            border: solid 2px black;
+            background-color: white;
+            height: 100%;
+            width: 100%;
+            border-radius: 10%;
+        }
+
+        .square.flash {
+            background-color: green;
+        }
+    </style>
+    <script>
+        let squareContent = "193425786"
+
+        function randomizePuzzle() {
+            squareContent = randomNumberString(1, 9);
+        }
+
+        // Creates a string with each number from min to max(inclusive) where each number is represented only once, but in random order
+        function randomNumberString(min, max) {
+            if (min > max) {
+                return ""
+            }
+
+            let randomNumber = getRandomNumber(min, max);
+
+            return randomNumber.toString()
+                + randomNumberString(min, randomNumber - 1)
+                + randomNumberString(randomNumber + 1, max)
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+
+
+        function drawPuzzle() {
+            document.getElementById("app").innerHTML = /*HTML*/ `
+                <div id="puzzle">
+                    ${createButton(1, ['square2', 'square4'])
+                + createButton(2, ['square1', 'square3', 'square5'])
+                + createButton(3, ['square2', 'square6'])
+                + createButton(4, ['square1', 'square5', 'square7'])
+                + createButton(5, ['square2', 'square4', 'square6', 'square8'])
+                + createButton(6, ['square3', 'square5', 'square9'])
+                + createButton(7, ['square4', 'square8'])
+                + createButton(8, ['square5', 'square7', 'square9'])
+                + createButton(9, ['square6', 'square8'])
+                }
+                </div>
+            `;
+        }
+
+        function createButton(squareNr, adjecentSquares) {
+            let index = squareNr - 1;
+            let content = squareContent[index] === '9' ? '' : squareContent[index];
+            return /*HTML*/ `
+            <button onclick='moveMabe(this.id, ${JSON.stringify(adjecentSquares)})' id="square${squareNr}" class="square">${content}</button>
+            `;
+        }
+
+        function moveMabe(myId, adjecentIds) {
+            const self = document.getElementById(myId);
+            for (let id of adjecentIds) {
+                const adjecentCell = document.getElementById(id);
+                if (adjecentCell.innerText === "") {
+                    adjecentCell.innerText = self.innerText;
+                    self.innerText = ""
+                    break
+                }
+            }
+
+            if (isSolved()) {
+                flashSquares(350, 9);
+            } else {
+                setDefaultSquareBackground();
+            }
+        }
+
+        function isSolved() {
+            for (let i = 1; i <= 8; i++) {
+                if (i != document.getElementById('square' + i).innerText) return false;
+            }
+            return true
+        }
+
+        function flashSquares(interval, rounds) {
+            let intervalHandle = setInterval(toggleFlash, interval);
+
+            setTimeout(clearInterval, (interval * rounds), intervalHandle)
+        }
+
+        function toggleFlash() {
+            for (let i = 1; i <= 9; i++) {
+                const element = document.getElementById('square' + i);
+                element.className = element.className === 'square flash' ? 'square' : 'square flash'
+            }
+        }
+
+        function setDefaultSquareBackground() {
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById('square' + i).className = 'square'
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <script>
+            // randomizePuzzle();
+            drawPuzzle()
+        </script>
+    </div>
+</body>
+
+</html>

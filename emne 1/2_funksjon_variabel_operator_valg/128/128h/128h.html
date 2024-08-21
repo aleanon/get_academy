@@ -61,7 +61,7 @@
                 + createButton("setOperator('-')", "-", "enabled")
                 + createButton("flipSign()", "∓", "enabled",)
                 + createButton("numberInput('0')", "0", "enabled")
-                + createButton("dot()", ",", "enabled")
+                + createButton("comma()", ",", "enabled")
                 + createButton("equal()", "=", "", "equal", "disabled")
             )}
             `;
@@ -167,7 +167,7 @@
             update();
         }
 
-        function dot() {
+        function comma() {
             if (resetScreenOnNextInput) {
                 screen = "0"
                 resetScreenOnNextInput = false;
