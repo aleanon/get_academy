@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>141D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #form {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        button {
+            grid-column: span 2;
+        }
+    </style>
+    <script>
+        let firstName = "";
+        let emailAddress = "";
+
+        function changeName(name) {
+            firstName = name;
+        }
+
+        function changeEmail(email) {
+            emailAddress = email;
+        }
+
+        function formView() {
+            document.getElementById("form").innerHTML = /*HTML*/ `
+            <label for="name">First Name:</label>
+            <input onchange="changeName(this.value)" type="text" id="name" value="${firstName}" required>
+            <label for="email">Email Address:</label>
+            <input onchange="changeEmail(this.value)" type="email" id="email" value="${emailAddress}" required>
+            <button onclick="register()">Register</button>
+            `;
+        }
+
+        function register() {
+            document.getElementById("form").innerHTML = /*HTML*/ `
+                <p>First Name:</p>
+                <p>${firstName}</p>
+                <p>Email Address:</p>
+                <p>${emailAddress}</p>
+                <button onclick="formView()">Rediger</button>
+            `;
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="form">
+        <script>formView()</script>
+    </div>
+
+</body>
+
+</html>
