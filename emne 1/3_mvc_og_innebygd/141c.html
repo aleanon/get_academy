@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>141C</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            gap: 30px;
+        }
+
+        .new-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 30px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<script>
+    let background = null;
+    let color = null;
+
+    function changeBackground(color) {
+        background = color;
+    }
+
+    function changeColor(newColor) {
+        color = newColor;
+    }
+
+    function createNewDiv() {
+        if (background != null && color != null) {
+            document.body.innerHTML += /*HTML*/ `
+                <div class="new-div" style="background-color: ${background}; color: ${color}">Sjekk denne forgrunnsfargen</div>
+            `;
+        }
+    }
+</script>
+
+<body>
+    <div>
+        <h3>Select background</h3>
+        <select onchange="changeBackground(this.value)">
+            <option>Select Background color</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="yellow">Yellow</option>
+        </select>
+    </div>
+
+    <div>
+        <h3>Select color</h3>
+        <select onchange="changeColor(this.value)">
+            <option>Select foreground color</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="yellow">Yellow</option>
+        </select>
+    </div>
+
+    <button onclick="createNewDiv()">Create new div</button>
+</body>
+
+</html>
