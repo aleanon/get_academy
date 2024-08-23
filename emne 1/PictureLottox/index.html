@@ -70,7 +70,7 @@
         const showImgInterval = 1000;
         let boardWidth;
         let board = [];
-        let opened = [];
+        let openedThisRound = [];
         let intervalId = "";
         let tries = 0;
 
@@ -180,9 +180,9 @@
 
             if (noOpenedImgThisRound()) {
                 board[index][0] = true;
-                opened.push([index])
+                openedThisRound.push([index])
             } else {
-                openMatchedOrCloseUnmatchedImages(index)
+                compareImages(index)
                 tries++;
             }
             updateView();
@@ -193,34 +193,34 @@
         }
 
         function noOpenedImgThisRound() {
-            return opened.length == 0
+            return openedThisRound.length == 0
         }
 
-        function openMatchedOrCloseUnmatchedImages(index) {
-            if (lastOpenedImgMatchesPrevious(index)) {
+        function compareImages(index) {
+            if (imagesMatch(index)) {
                 board[index][0] = true;
-                opened = [];
+                openedThisRound = [];
             } else {
-                openLastImageAndCloseAfterDelay(index)
+                openAndCloseWithDelay(index)
             }
         }
 
-        function lastOpenedImgMatchesPrevious(lastOpenedIndex) {
-            return board[opened[0]][1] == board[lastOpenedIndex][1];
+        function imagesMatch(lastOpenedIndex) {
+            return board[openedThisRound[0]][1] == board[lastOpenedIndex][1];
         }
 
-        function openLastImageAndCloseAfterDelay(imageIndex) {
+        function openAndCloseWithDelay(imageIndex) {
             board[imageIndex][0] = true;
-            opened.push(imageIndex);
+            openedThisRound.push(imageIndex);
             intervalId = setInterval(closeNewlyOpened, showImgInterval);
             setTimeout(clearAndResetInterval, showImgInterval);
         }
 
         function closeNewlyOpened() {
-            for (let i of opened) {
+            for (let i of openedThisRound) {
                 board[i][0] = false;
             }
-            opened = [];
+            openedThisRound = [];
 
             updateView();
         }
@@ -232,7 +232,7 @@
 
         function newGame() {
             board = [];
-            opened = [];
+            openedThisRound = [];
             intervalId = "";
             tries = 0;
             updateView();
