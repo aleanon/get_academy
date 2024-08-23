@@ -1,0 +1,144 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>145A</title>
+    <style>
+        div.square {
+            border: 1px solid gray
+        }
+
+        div.board {
+            display: grid;
+            grid-template-columns: repeat(2, 10rem);
+            grid-template-rows: repeat(2, 10rem);
+        }
+
+        div.buttons {
+            width: 20rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            width: 90%;
+        }
+
+        div.square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    DRY-prinsippet
+    Don't Repeat Yourself
+
+    <h3>
+        JavaScript
+    </h3>
+    <li>Endre HTML av en tag ut fra id</li>
+    <li>Lage egne kommandoer, dvs. funksjoner</li>
+    <li>onclick</li>
+
+    <div id="app">
+    </div>
+
+    <script>
+        let imgIndex = 3;
+        updateView();
+
+        function updateView() {
+            document.getElementById('app').innerHTML = /*HTML*/`
+            ${createDivWithClassAndContent("board", createGrid())}
+            ${createDivWithClassAndContent("buttons", createButtons())}
+            `;
+        }
+
+        function createGrid() {
+            let html = "";
+            for (let i = 0; i < 4; i++) {
+                if (i == imgIndex) {
+                    html += /*HTML*/ `<div class="square"><img src="https://getacademy.no/hubfs/GET_RGB_logo-01-2.png"></div>`;
+                } else {
+                    html += /*HTML*/ `<div class="square"></div>`;
+                }
+            }
+            return html;
+        }
+
+        function createButtons() {
+            let html = "";
+            if (imgIndex < 2) {
+                html += createDisabledButton("▲");
+            } else {
+                html += createEnabledButton("goUp()", "▲");
+            }
+
+            html += /*HTML*/ `<div>${createButtonsLeftAndRight()}</div>`;
+
+            if (imgIndex > 1) {
+                html += createDisabledButton("▼");
+            } else {
+                html += createEnabledButton("goDown()", "▼");
+            }
+            return html;
+        }
+
+        function createButtonsLeftAndRight() {
+            let html = "";
+            if (imgIndex == 0 || imgIndex == 2) {
+                html += createDisabledButton("◀");
+            } else {
+                html += createEnabledButton("goLeft()", "◀")
+            }
+
+            if (imgIndex == 1 || imgIndex == 3) {
+                html += createDisabledButton("▶");
+            } else {
+                html += createEnabledButton("goRight()", "▶")
+            }
+
+            return html;
+        }
+
+        function createDivWithClassAndContent(group, content) {
+            return /*HTML*/ `<div class="${group}">${content}</div>`;
+        }
+
+        function createDisabledButton(text) {
+            return /*HTML*/ `<button disabled>${text}</button>`;
+        }
+
+        function createEnabledButton(onclick, text) {
+            return /*HTML*/ `<button onclick="${onclick}">${text}</button>`;
+        }
+
+        function goUp() {
+            imgIndex -= 2;
+            updateView()
+        }
+
+        function goDown() {
+            imgIndex += 2;
+            updateView()
+        }
+
+        function goRight() {
+            imgIndex += 1
+            updateView()
+        }
+
+        function goLeft() {
+            imgIndex -= 1
+            updateView()
+        }
+
+    </script>
+</body>
+
+</html>
