@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PictureLottox</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(34, 41, 56);
+        }
+
+        #game {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #message {
+            height: 5vh;
+            text-align: center;
+        }
+
+        #valg-overskrift {
+            margin-bottom: 20%;
+        }
+
+        .button-primary {
+            width: 300px;
+            height: 5vh;
+            background-color: rgb(39, 39, 88);
+            color: white;
+            border-radius: 0.5rem;
+        }
+
+        #board {
+            display: grid;
+            width: 70vh;
+            height: 70vh;
+            gap: 5px;
+        }
+
+        #board>div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgb(83, 83, 83);
+            border-radius: 5%;
+            padding: 2%;
+            background-color: rgb(107, 106, 106);
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+    <script>
+        const showImgInterval = 1000;
+        let boardWidth;
+        let board = [];
+        let opened = [];
+        let intervalId = "";
+        let tries = 0;
+
+        function updateView() {
+            if (board.length == 0) {
+                document.getElementById("game").innerHTML = /*HTML*/ `
+                    ${createChooseGameView()}
+                `;
+            } else {
+                document.getElementById("game").innerHTML = /*HTML*/ `
+                    ${createBoardView()}
+                `;
+            }
+        }
+
+        function createChooseGameView() {
+            return /*HTML*/ `
+            ${createHeader("valg-overskrift", "Velg størrelse på spill")}
+            ${createButton("newBoard(2)", "4 Ruter", "button-primary")
+                + createButton("newBoard(4)", "16 Ruter", "button-primary")
+                + createButton("newBoard(6)", "36 Ruter", "button-primary")
+                }
+            `;
+        }
+
+        function createBoardView() {
+            let message = isCompleted() ? `Du klarte det på ${tries} forsøk` : `Forsøk: ${tries}`;
+            return /*HTML*/ `
+            ${createHeader("message", message)}
+            <div id="board" style="
+                    grid-template-columns: repeat(${boardWidth} ,1fr);
+                    grid-template-rows: repeat(${boardWidth} ,1fr);
+                ">
+                ${createGrid()}
+            </div>
+            ${createButton("newGame()", "New Game", "button-primary")}
+            `;
+        }
+
+        function createGrid() {
+            let html = "";
+            for (let i = 0; i < board.length; i++) {
+                if (board[i][0] === true) {
+                    html += /*HTML*/ `<div><img src="img/${board[i][1]}.jpg"></div>`;
+                } else {
+                    html += /*HTML*/ `<div onclick="showImage(${i})"></div>`;
+                }
+            }
+            return html;
+        }
+
+        function createHeader(id, text) {
+            return /*HTML*/ `<h1 id="${id}">${text}</h1>`;
+        }
+
+        function createButton(onclick, text, group) {
+            return /*HTML*/ `<button class="${group}" onclick="${onclick}">${text}</button>`;
+        }
+
+        function newBoard(width) {
+            let newBoard = [];
+            let nrOfimages = width * width / 2;
+            let randomisedArray = repeatRandomNumberArray(1, nrOfimages, 2);
+            for (let i = 0; i < randomisedArray.length; i++) {
+                let imgId = randomisedArray[i];
+                newBoard.push([false, imgId])
+            }
+            boardWidth = width;
+            board = newBoard;
+
+            updateView()
+        }
+
+        // Creates an array containing every number from min to max(inclusive) where every number is repeated x times
+        function repeatRandomNumberArray(min, max, nrAppearances) {
+            let arrays = [];
+            for (let i = 0; i < nrAppearances; i++) {
+                arrays.push(randomNumberArray(min, max));
+            }
+            let result = [];
+            for (let i = 0; i < arrays[0].length; i++) {
+                for (let j = 0; j < nrAppearances; j++) {
+                    result.push(arrays[j][i]);
+                }
+            }
+            return result;
+        }
+
+        function randomNumberArray(min, max) {
+            if (min > max) {
+                return []
+            }
+
+            let randomNumber = getRandomNumber(min, max);
+
+            return [randomNumber.toString()]
+                .concat(randomNumberArray(min, randomNumber - 1))
+                .concat(randomNumberArray(randomNumber + 1, max))
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function showImage(index) {
+            if (notReadyForNewAction()) return
+
+            if (noOpenedImgThisRound()) {
+                board[index][0] = true;
+                opened.push([index])
+            } else {
+                openMatchedOrCloseUnmatchedImages(index)
+                tries++;
+            }
+            updateView();
+        }
+
+        function notReadyForNewAction() {
+            return intervalId !== ""
+        }
+
+        function noOpenedImgThisRound() {
+            return opened.length == 0
+        }
+
+        function openMatchedOrCloseUnmatchedImages(index) {
+            if (lastOpenedImgMatchesPrevious(index)) {
+                board[index][0] = true;
+                opened = [];
+            } else {
+                openLastImageAndCloseAfterDelay(index)
+            }
+        }
+
+        function lastOpenedImgMatchesPrevious(lastOpenedIndex) {
+            return board[opened[0]][1] == board[lastOpenedIndex][1];
+        }
+
+        function openLastImageAndCloseAfterDelay(imageIndex) {
+            board[imageIndex][0] = true;
+            opened.push(imageIndex);
+            intervalId = setInterval(closeNewlyOpened, showImgInterval);
+            setTimeout(clearAndResetInterval, showImgInterval);
+        }
+
+        function closeNewlyOpened() {
+            for (let i of opened) {
+                board[i][0] = false;
+            }
+            opened = [];
+
+            updateView();
+        }
+
+        function clearAndResetInterval() {
+            clearInterval(intervalId);
+            intervalId = "";
+        }
+
+        function newGame() {
+            board = [];
+            opened = [];
+            intervalId = "";
+            tries = 0;
+            updateView();
+        }
+
+        function isCompleted() {
+            for (let i = 0; i < board.length; i++) {
+                if (board[i][0] === false) return false;
+            }
+            return true;
+        }
+
+        // En jukse funksjon som er lagt inn for testing, må kalles fra console
+        function showAll() {
+            for (let i = 0; i < board.length; i++) {
+                board[i][0] = true;
+            }
+            updateView();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="game"></div>
+    <script>
+        updateView()
+    </script>
+    </div>
+</body>
+
+</html>
