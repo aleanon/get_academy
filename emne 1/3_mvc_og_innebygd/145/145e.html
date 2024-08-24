@@ -35,10 +35,9 @@
 
         // controller
         function add() {
-            count = inputValue.length;
-            for (let i = 0; i < inputValue.length; i++) {
-                sum += parseInt(inputValue[i]);
-            }
+            count++;
+            sum += parseInt(inputValue);
+            inputValue = '';
             show();
         }
 
