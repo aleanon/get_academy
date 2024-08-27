@@ -52,10 +52,10 @@
 
 
         function addPuzzlePieceToBoard(hasTop, hasRight, hasBottom, hasLeft) {
-            if (row == 0 && hasTop == true) return;
-            if (row == 24 && hasBottom == true) return;
-            if (column == 24 && hasRight == true) return;
-            if (column == 0 && hasLeft == true) return;
+            if (row == 0 && hasTop) return;
+            if (row == 24 && hasBottom) return;
+            if (column == 24 && hasRight) return;
+            if (column == 0 && hasLeft) return;
             if (row > 24) return;
 
             addPuzzlePiece('board', hasTop, hasRight, hasBottom, hasLeft, '', color, column, row)
