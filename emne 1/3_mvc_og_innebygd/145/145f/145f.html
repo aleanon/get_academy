@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>145F</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+        }
+
+        #hangman {
+            width: 1020px;
+            height: 80vh;
+        }
+
+        #gallow {
+            height: 100%;
+            width: 100%;
+        }
+
+        svg .rotateRight {
+            transform-box: fill-box;
+            transform-origin: center;
+            transform: rotate(45deg);
+        }
+
+        svg .rotateLeft {
+            transform-box: fill-box;
+            transform-origin: center;
+            transform: rotate(135deg);
+        }
+
+        svg .topBeam {
+            transform-box: fill-box;
+            transform-origin: center;
+            transform: rotate(90deg);
+        }
+
+        svg .topSupport {
+            transform-box: fill-box;
+            transform-origin: center;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="hangman">
+        <div id="gallow">
+            <svg baseProfile="tiny" height="100%" version="1.2" width="100%">
+                <!--left beem -->
+                <rect fill="#8B4513" height="540px" width="25px" x="200" y="30" />
+                <!-- right beem -->
+                <!-- <rect fill="#8B4513" height="150px" width="50px" x="700" y="530" /> -->
+
+                <!-- left beem support-->
+                <rect fill="#8B4513" height="130px" width="25px" x="150" y="450" class="rotateRight" />
+                <!-- right beem support-->
+                <rect fill="#8B4513" height="130px" width="25px" x="250" y="450" class="rotateLeft" />
+
+                <!-- top beam support -->
+                <rect fill="#8B4513" height="130px" width="25px" x="250" y="20" class="topSupport" />
+
+                <!-- top beam -->
+                <rect fill="#8B4513" height="300px" width="25px" x="350" y="-108" class="topBeam" />
+
+                <!-- rope -->
+                <rect fill="#black" height="150px" width="5px" x="500" y="30" />
+
+                <!-- head -->
+                <circle stroke="black" stroke-width="5" fill="white" cx="502" cy="200" r="25" />
+
+                <!-- neck -->
+                <!-- <line stroke="black" stroke-width="10" x1="503" y1="425" x2="503" y2="470" /> -->
+
+                <!-- body -->
+                <line stroke="black" stroke-width="5" x1="503" y1="225" x2="503" y2="320" />
+                <!-- right arm -->
+                <line stroke="black" stroke-width="5" x1="503" y1="250" x2="550" y2="300" />
+                <!-- left arm -->
+                <line stroke="black" stroke-width="5" x1="503" y1="250" x2="452" y2="300" />
+                <!-- right leg  -->
+                <line stroke="black" stroke-width="5" x1="503" y1="320" x2="550" y2="400" />
+                <!-- left leg  -->
+                <line stroke="black" stroke-width="5" x1="503" y1="320" x2="452" y2="400" />
+
+
+                <!-- ground -->
+                <line stroke="grey" stroke-width="30" x1="100" y1="560" x2="800" y2="560" />
+
+            </svg>
+        </div>
+
+        <!-- <script>updateView()</script> -->
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    function updateView() {
+        document.getElementById("hangman").innerHTML = /*HTML*/ `
+            <svg></svg>
+        `;
+    }
+</script>
+
+
+
+
+
+
+
+<!-- <div class="cell">1</div>
+<div class="cell">2</div>
+<div class="cell">3</div>
+<div class="cell">4</div>
+<div class="cell">5</div>
+<div class="cell">6</div>
+<div class="cell">7</div>
+<div class="cell topBeam">8</div>
+<div class="cell topBeam">9</div>
+<div class="cell topBeam">10</div>
+<div class="cell">11</div>
+<div class="cell">12</div>
+<div class="cell">13</div>
+<div class="cell leftBeam">14</div>
+<div class="cell">15</div>
+<div class="cell">16</div>
+<div class="cell">17</div>
+<div class="cell">18</div>
+<div class="cell">19</div>
+<div class="cell leftBeam">20</div>
+<div class="cell">21</div>
+<div class="cell">22</div>
+<div class="cell">23</div>
+<div class="cell">24</div>
+<div class="cell">25</div>
+<div class="cell leftBeam">26</div>
+<div class="cell">27</div>
+<div class="cell">28</div>
+<div class="cell">29</div>
+<div class="cell">30</div>
+<div class="cell">31</div>
+<div class="cell leftBeam">32</div>
+<div class="cell">33</div>
+<div class="cell">34</div>
+<div class="cell">35</div>
+<div class="cell">36</div> -->
