@@ -62,7 +62,7 @@
             if (isLastColumn() && canNotBePlacedLastColumn(hasLeft)) return;
             if (row > 24) return;
 
-            addPuzzlePiece('board', hasTop, hasRight, hasBottom, hasLeft, '', color, column, row)
+            addPuzzlePiece('board', hasTop, hasRight, hasBottom, hasLeft, '', color, column, row);
 
             if (isLastColumn()) {
                 column = 24;
