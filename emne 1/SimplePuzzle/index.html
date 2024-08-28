@@ -53,10 +53,11 @@
 
 
         function addPuzzlePieceToBoard(hasTop, hasRight, hasBottom, hasLeft) {
-            if (isTopRow() && canNotBePlacedAtTop(hasTop)) return;
+            if (isTopRow() && canNotBePlacedAtTop(hasTop)) return; // Kan også skrives som if (row == 0 && hasTop) return;
             if (isBottomRow() && canNotBePlacedAtBottom(hasBottom)) return;
             if (isFirstColumn() && canNotBePlacedFirstColumn(hasRight)) return;
             if (isLastColumn() && canNotBePlacedLastColumn(hasLeft)) return;
+            if (row > 24) return;
 
             addPuzzlePiece('board', hasTop, hasRight, hasBottom, hasLeft, '', color, column, row)
 
