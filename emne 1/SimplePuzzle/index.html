@@ -21,8 +21,11 @@
         // addPuzzlePiece('board', false, true, true, true, '', 1, 12, 0);
         // addPuzzlePiece('board', true, false, true, true, '', 2, 24, 6);
 
+        // Top row is represented by the value 0, second has value 6 and so on, bottom row has value 24
         let row = 0;
+        // Right column has value 24, second has 18 and so on, left column has value 0 
         let column = 24;
+        // Value 1 means light blue and value 2 means dark blue
         let color = 1;
 
         addPuzzlePiece('buttons', true, true, true, true, 'addPuzzlePieceToBoard(true, true,true,true)', 1);
