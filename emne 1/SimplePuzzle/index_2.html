@@ -52,12 +52,8 @@
 
 
         function addPuzzlePieceToBoard(hasTop, hasRight, hasBottom, hasLeft) {
+            // Ikke bruk negative navn for funksjoner, kall heller canPlacePiece og returner false om den ikke kan plasseres
             if (notAllowedToPlacePiece(hasTop, hasRight, hasBottom, hasLeft)) return;
-            // if (row == 0 && hasTop) return;
-            // if (row == 24 && hasBottom) return;
-            // if (column == 24 && hasRight) return;
-            // if (column == 0 && hasLeft) return;
-            // if (row > 24) return;
 
             addPuzzlePiece('board', hasTop, hasRight, hasBottom, hasLeft, '', color, column, row);
 
