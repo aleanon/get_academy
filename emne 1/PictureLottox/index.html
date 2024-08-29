@@ -71,7 +71,7 @@
         let boardWidth;
         let board = [];
         let openedThisRound = [];
-        let intervalId = "";
+        let intervalId = null;
         let tries = 0;
 
         function updateView() {
@@ -176,24 +176,24 @@
         }
 
         function showImage(index) {
-            if (notReadyForNewAction()) return
+            if (!readyForNewAction()) return
 
-            if (noOpenedImgThisRound()) {
-                board[index][0] = true;
-                openedThisRound.push([index])
-            } else {
+            if (hasOpenedImgThisRound()) {
                 compareImages(index)
                 tries++;
+            } else {
+                board[index][0] = true;
+                openedThisRound.push([index])
             }
             updateView();
         }
 
-        function notReadyForNewAction() {
-            return intervalId !== ""
+        function readyForNewAction() {
+            return intervalId === null
         }
 
-        function noOpenedImgThisRound() {
-            return openedThisRound.length == 0
+        function hasOpenedImgThisRound() {
+            return openedThisRound.length != 0
         }
 
         function compareImages(index) {
@@ -227,13 +227,13 @@
 
         function clearAndResetInterval() {
             clearInterval(intervalId);
-            intervalId = "";
+            intervalId = null;
         }
 
         function newGame() {
             board = [];
             openedThisRound = [];
-            intervalId = "";
+            intervalId = null;
             tries = 0;
             updateView();
         }
