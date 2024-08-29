@@ -21,6 +21,10 @@
         }
 
         #hangman {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             width: 1020px;
             height: 80vh;
         }
@@ -28,6 +32,20 @@
         #gallow {
             height: 100%;
             width: 100%;
+        }
+
+        #letters {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin: 10px;
+        }
+
+        .letter {
+            border-bottom: 2px solid black;
+            font-size: 3rem;
+            text-align: center;
+            height: 50px;
         }
 
         svg .rotateRight {
@@ -53,57 +71,24 @@
             transform-origin: center;
             transform: rotate(45deg);
         }
+
+        #letterButtons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .letterButton {
+            width: calc(100%/26);
+            height: 2rem;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 
 <body>
     <div id="hangman">
-        <div id="gallow">
-            <svg baseProfile="tiny" height="100%" version="1.2" width="100%">
-                <!--left beem -->
-                <rect fill="#8B4513" height="540px" width="25px" x="200" y="30" />
-                <!-- right beem -->
-                <!-- <rect fill="#8B4513" height="150px" width="50px" x="700" y="530" /> -->
 
-                <!-- left beem support-->
-                <rect fill="#8B4513" height="130px" width="25px" x="150" y="450" class="rotateRight" />
-                <!-- right beem support-->
-                <rect fill="#8B4513" height="130px" width="25px" x="250" y="450" class="rotateLeft" />
-
-                <!-- top beam support -->
-                <rect fill="#8B4513" height="130px" width="25px" x="250" y="20" class="topSupport" />
-
-                <!-- top beam -->
-                <rect fill="#8B4513" height="300px" width="25px" x="350" y="-108" class="topBeam" />
-
-                <!-- rope -->
-                <rect fill="#black" height="150px" width="5px" x="500" y="30" />
-
-                <!-- head -->
-                <circle stroke="black" stroke-width="5" fill="white" cx="502" cy="200" r="25" />
-
-                <!-- neck -->
-                <!-- <line stroke="black" stroke-width="10" x1="503" y1="425" x2="503" y2="470" /> -->
-
-                <!-- body -->
-                <line stroke="black" stroke-width="5" x1="503" y1="225" x2="503" y2="320" />
-                <!-- right arm -->
-                <line stroke="black" stroke-width="5" x1="503" y1="250" x2="550" y2="300" />
-                <!-- left arm -->
-                <line stroke="black" stroke-width="5" x1="503" y1="250" x2="452" y2="300" />
-                <!-- right leg  -->
-                <line stroke="black" stroke-width="5" x1="503" y1="320" x2="550" y2="400" />
-                <!-- left leg  -->
-                <line stroke="black" stroke-width="5" x1="503" y1="320" x2="452" y2="400" />
-
-
-                <!-- ground -->
-                <line stroke="grey" stroke-width="30" x1="100" y1="560" x2="800" y2="560" />
-
-            </svg>
-        </div>
-
-        <!-- <script>updateView()</script> -->
     </div>
 </body>
 
@@ -111,52 +96,167 @@
 
 <script>
 
+    const hangmanElements = [
+        // /*svg*/ `<line stroke="#8B4513" stroke-width="15" x1="350" y1="350" x2="350" y2="550" />`,
+        // /*svg*/ `<line stroke="#8B4513" stroke-width="15" x1="343" y1="350" x2="707" y2="350" />`,
+        // /*svg*/ `<line stroke="#8B4513" stroke-width="15" x1="700" y1="350" x2="700" y2="550" />`,
+        // Empty element to occupy index 0
+        ``,
+        // vertical beam
+        /*svg*/ `<rect fill="#8B4513" height="540px" width="25px" x="200" y="30" />`,
+        // left beam support
+        /*svg*/ `<rect fill="#8B4513" height="130px" width="25px" x="150" y="450" class="rotateRight" />`,
+        // right beam support
+        /*svg*/ `<rect fill="#8B4513" height="130px" width="25px" x="250" y="450" class="rotateLeft" />`,
+        // top beam support
+        /*svg*/ `<rect fill="#8B4513" height="130px" width="25px" x="250" y="20" class="topSupport" />`,
+        // top beam
+        /*svg*/ `<rect fill="#8B4513" height="300px" width="25px" x="350" y="-108" class="topBeam" />`,
+        // rope
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="30" x2="503" y2="130"/>`,
+        // head
+        /*svg*/ `<circle stroke="black" stroke-width="5" fill="white" cx="502" cy="145" r="25" />`,
+        // body
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="170" x2="503" y2="265" />`,
+        // right arm
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="195" x2="550" y2="245" />`,
+        // left arm
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="195" x2="452" y2="245" />`,
+        // right leg
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="265" x2="550" y2="345" />`,
+        // left leg
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="265" x2="452" y2="345" />`,
+    ];
+
+    const hangedmanElements = [
+        // vertical beam
+        /*svg*/ `<rect fill="#8B4513" height="540px" width="25px" x="200" y="30" />`,
+        // left beam support
+        /*svg*/ `<rect fill="#8B4513" height="130px" width="25px" x="150" y="450" class="rotateRight" />`,
+        // right beam support
+        /*svg*/ `<rect fill="#8B4513" height="130px" width="25px" x="250" y="450" class="rotateLeft" />`,
+        // top beam support
+        /*svg*/ `<rect fill="#8B4513" height="130px" width="25px" x="250" y="20" class="topSupport" />`,
+        // top beam
+        /*svg*/ `<rect fill="#8B4513" height="300px" width="25px" x="350" y="-108" class="topBeam" />`,
+        // rope
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="30" x2="503" y2="230"/>`,
+        // head
+        /*svg*/ `<circle stroke="black" stroke-width="5" fill="white" cx="502" cy="245" r="25" />`,
+        // body
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="270" x2="503" y2="365" />`,
+        // right arm
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="295" x2="550" y2="345" />`,
+        // left arm
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="295" x2="452" y2="345" />`,
+        // right leg
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="365" x2="550" y2="445" />`,
+        // left leg
+        /*svg*/ `<line stroke="black" stroke-width="5" x1="503" y1="365" x2="452" y2="445" />`,
+        // platform hatch
+        /*svg*/ `<line stroke="grey" stroke-width="10" x1="560" y1="350" x2="560" y2="500" />`,
+        // platform left leg
+        /*svg*/ `<line stroke="#8B4513" stroke-width="15" x1="350" y1="350" x2="350" y2="550" />`,
+        // platform top
+        /*svg*/ `<line stroke="#8B4513" stroke-width="15" x1="343" y1="350" x2="707" y2="350" />`,
+        // platform right leg
+        /*svg*/ `<line stroke="#8B4513" stroke-width="15" x1="700" y1="350" x2="700" y2="550" />`,
+        // ground
+        /*svg*/ `<line stroke="grey" stroke-width="30" x1="100" y1="560" x2="800" y2="560" />`,
+    ];
+
+
+    let svgElementsIndex = 0;
+    let secretWord = "tamperproof";
+    let correctGuesses = initializeEmptyArray(secretWord.length);
+    let guessed = "";
+    let finished = false;
+
+    function initializeEmptyArray(nrOfElements) {
+        let array = [];
+        for (let i = 0; i < nrOfElements; i++) {
+            array.push("");
+        }
+        return array;
+    }
+
     function updateView() {
         document.getElementById("hangman").innerHTML = /*HTML*/ `
-            <svg></svg>
+        <div id="letters">
+            ${createLetterBoxes()}
+        </div>
+        <div id="gallow">
+            ${svgElementsIndex < hangmanElements.length ? hangmanSvg() : hangedmanSvg()}  
+        </div>
+        <div id="letterButtons">
+            ${createLetterButtons()}
+        </div>
         `;
     }
+
+    function createLetterBoxes() {
+        let html = "";
+        let divisor = secretWord.length * 2;
+        for (let char of correctGuesses) {
+            html += /*HTML*/ `<div class="letter" style="width: calc(100%/${divisor})">${char}</div>`;
+        }
+        return html;
+    }
+
+    function hangmanSvg() {
+        let html = "";
+        for (let i = 0; i <= svgElementsIndex; i++) {
+            html += hangmanElements[i];
+        }
+        // Adds the platform and ground
+        html += /*svg*/ `
+            <line stroke="#8B4513" stroke-width="15" x1="350" y1="350" x2="350" y2="550" />
+            <line stroke="#8B4513" stroke-width="15" x1="343" y1="350" x2="707" y2="350" />
+            <line stroke="#8B4513" stroke-width="15" x1="700" y1="350" x2="700" y2="550" />
+            <line stroke="grey" stroke-width="30" x1="100" y1="560" x2="800" y2="560" />
+        `;
+        return /*HTML*/ `
+            <svg id="painting" baseProfile="tiny" height="100%" version="1.2" width="100%" >${html}</svg>
+        `;
+    }
+
+    function hangedmanSvg() {
+        return /*HTML*/`<svg id="painting" baseProfile="tiny" height="100%" version="1.2" width="100%">
+            ${hangedmanElements.toString()}    
+        </svg>`;
+    }
+
+    function createLetterButtons() {
+        let html = "";
+        for (let i = 0; i < 26; i++) {
+            let char = String.fromCharCode(97 + i);
+            if (guessed.includes(char) || finished) {
+                html += /*HTML*/ `<button class="letterButton" disabled>${char.toUpperCase()}</button>`;
+            } else {
+                html += /*HTML*/ `<button class="letterButton" onclick="guessLetter('${char}')">${char.toUpperCase()}</button>`;
+            }
+        }
+        return html;
+    }
+
+    function guessLetter(char) {
+        let matchFound = false;
+        for (let i = 0; i < secretWord.length; i++) {
+            if (secretWord[i] === char) {
+                correctGuesses[i] = char.toUpperCase();
+                matchFound = true;
+            }
+        }
+        if (!matchFound) {
+            svgElementsIndex++;
+        }
+        guessed += char;
+
+        if (svgElementsIndex >= hangmanElements.length || correctGuesses.join('').toLowerCase() == secretWord) {
+            finished = true;
+        }
+        updateView();
+    }
+
+    updateView()
 </script>
-
-
-
-
-
-
-
-<!-- <div class="cell">1</div>
-<div class="cell">2</div>
-<div class="cell">3</div>
-<div class="cell">4</div>
-<div class="cell">5</div>
-<div class="cell">6</div>
-<div class="cell">7</div>
-<div class="cell topBeam">8</div>
-<div class="cell topBeam">9</div>
-<div class="cell topBeam">10</div>
-<div class="cell">11</div>
-<div class="cell">12</div>
-<div class="cell">13</div>
-<div class="cell leftBeam">14</div>
-<div class="cell">15</div>
-<div class="cell">16</div>
-<div class="cell">17</div>
-<div class="cell">18</div>
-<div class="cell">19</div>
-<div class="cell leftBeam">20</div>
-<div class="cell">21</div>
-<div class="cell">22</div>
-<div class="cell">23</div>
-<div class="cell">24</div>
-<div class="cell">25</div>
-<div class="cell leftBeam">26</div>
-<div class="cell">27</div>
-<div class="cell">28</div>
-<div class="cell">29</div>
-<div class="cell">30</div>
-<div class="cell">31</div>
-<div class="cell leftBeam">32</div>
-<div class="cell">33</div>
-<div class="cell">34</div>
-<div class="cell">35</div>
-<div class="cell">36</div> -->
