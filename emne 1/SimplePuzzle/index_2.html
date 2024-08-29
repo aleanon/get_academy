@@ -52,20 +52,20 @@
 
 
         function addPuzzlePieceToBoard(hasTop, hasRight, hasBottom, hasLeft) {
-            // Ikke bruk negative navn for funksjoner, kall heller canPlacePiece og returner false om den ikke kan plasseres
-            if (notAllowedToPlacePiece(hasTop, hasRight, hasBottom, hasLeft)) return;
+            if (!canPlacePiece(hasTop, hasRight, hasBottom, hasLeft)) return;
 
             addPuzzlePiece('board', hasTop, hasRight, hasBottom, hasLeft, '', color, column, row);
 
             incrementColumnRowColor()
         }
 
-        function notAllowedToPlacePiece(hasTop, hasRight, hasBottom, hasLeft) {
-            return (row == 0 && hasTop)
-                || (row == 24 && hasBottom)
-                || (column == 24 && hasRight)
-                || (column == 0 && hasLeft)
-                || (row > 24)
+        function canPlacePiece(hasTop, hasRight, hasBottom, hasLeft) {
+            if (row == 0 && hasTop) return false;
+            if (row == 24 && hasBottom) return false;
+            if (column == 24 && hasRight) return false;
+            if (column == 0 && hasLeft) return false;
+            if (row > 24) return false;
+            return true;
         }
 
         function incrementColumnRowColor() {
