@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>151G</title>
+</head>
+
+<body>
+    <pre id="output"></pre>
+    <script>
+        printHashesOne();
+        function writeHash() {
+            document.getElementById('output').innerText += '#';
+        }
+
+        function writeSpace() {
+            document.getElementById('output').innerText += ' ';
+        }
+
+        function writeLineBreak() {
+            document.getElementById('output').innerText += '\n';
+        }
+
+        //prints
+        // ########
+        //  ######
+        //   ####
+        //    ##
+        function printHashesOne() {
+            const signsPrLine = 8;
+            for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
+                let nrOfHashes = 8 - (lineIndex * 2);
+                for (let charNr = 1; charNr <= signsPrLine; charNr++) {
+                    let nrOfSpacesBeforeHashes = (signsPrLine - nrOfHashes) / 2;
+                    if (charNr <= nrOfSpacesBeforeHashes) {
+                        writeSpace();
+                    } else if (charNr > nrOfSpacesBeforeHashes + nrOfHashes) {
+                        writeSpace();
+                    } else {
+                        writeHash();
+                    }
+                }
+                writeLineBreak();
+            }
+        }
+
+        // prints
+        //     ##
+        //    ####
+        //   ######
+        //  ########
+        //  ########
+        //   ######
+        //    ####
+        //     ##
+        function printHashestwo() {
+            const signsPrLine = 8;
+            for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
+                let nrOfHashes = 8 - (lineIndex * 2);
+                for (let charNr = 1; charNr <= signsPrLine; charNr++) {
+                    let nrOfSpacesBeforeHashes = (signsPrLine - nrOfHashes) / 2;
+                    if (charNr <= nrOfSpacesBeforeHashes) {
+                        writeSpace();
+                    } else if (charNr > nrOfSpacesBeforeHashes + nrOfHashes) {
+                        writeSpace();
+                    } else {
+                        writeHash();
+                    }
+                }
+                writeLineBreak();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
