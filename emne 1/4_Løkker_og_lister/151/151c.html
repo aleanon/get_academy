@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>151C</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    let textInput = "";
+    let reversedText = "";
+
+    updateView();
+    function updateView() {
+        document.getElementById("app").innerHTML = /*HTML*/ `
+            <input value="${textInput}" type="text" id="inputText" oninput="textInput=this.value">
+            <button onclick="reverseText(${textInput})">Reverse text</button>
+            <p id="outputText">${reversedText}</p>
+        `;
+    }
+
+    function reverseText() {
+        for (let i = textInput.length - 1; i >= 0; i--) {
+            reversedText += textInput[i];
+        }
+        updateView();
+    }
+
+
+</script>
+
+</html>
