@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>151D</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    let text = "KandutelleAlleaeneidennesammenhengendealtomfAttenderAresetningensomhandleromAltogingentingx"
+    let numberOfMatches = 0;
+
+    countCharCaseInsensitive('h');
+    function updateView() {
+        document.getElementById("app").innerText = `Antall 'a' i '${text}': ${numberOfMatches}`;
+    }
+
+    function countAs() {
+        for (let char of text) {
+            if (char === 'a') numberOfMatches++;
+        }
+        updateView();
+    }
+
+    function countAsCaseInsensitive(comparison) {
+        for (let char of text.toLocaleLowerCase()) {
+            if (char === 'a') numberOfMatches++;
+        }
+        updateView();
+    }
+
+    function countCharCaseInsensitive(checkChar) {
+        let ch = checkChar.toLowerCase();
+        for (let char of text.toLocaleLowerCase()) {
+            if (char === checkChar) numberOfMatches++;
+        }
+        updateView();
+    }
+
+    function alternateCount() {
+        numberOfMatches = text.toLocaleLowerCase().split('a').length - 1;
+        updateView();
+    }
+</script>
+
+</html>
