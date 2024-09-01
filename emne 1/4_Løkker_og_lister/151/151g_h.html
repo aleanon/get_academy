@@ -10,7 +10,12 @@
 <body>
     <pre id="output"></pre>
     <script>
+        printHashesOne();
+        writeLineBreak();
         printHashesTwo();
+        writeLineBreak();
+        printHashesThree();
+
         function writeHash() {
             document.getElementById('output').innerText += '#';
         }
@@ -29,14 +34,13 @@
         //   ####
         //    ##
         function printHashesOne() {
-            const signsPrLine = 8;
+            const charsPrLine = 8;
             for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
-                let nrOfHashes = 8 - (lineIndex * 2);
-                for (let charNr = 1; charNr <= signsPrLine; charNr++) {
-                    let nrOfSpacesBeforeHashes = (signsPrLine - nrOfHashes) / 2;
-                    if (charNr <= nrOfSpacesBeforeHashes) {
-                        writeSpace();
-                    } else if (charNr > nrOfSpacesBeforeHashes + nrOfHashes) {
+                let nrOfHashes = charsPrLine - (lineIndex * 2);
+                for (let charNr = 1; charNr <= charsPrLine; charNr++) {
+                    let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
+                    let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
+                    if (isWhitespace) {
                         writeSpace();
                     } else {
                         writeHash();
@@ -55,15 +59,14 @@
         //   ######
         //    ####
         //     ##
-        function printHashestwo() {
-            const signsPrLine = 8;
+        function printHashesTwo() {
+            const charsPrLine = 8;
             for (let lineIndex = 3; lineIndex >= 0; lineIndex--) {
-                let nrOfHashes = 8 - (lineIndex * 2);
-                for (let charNr = 1; charNr <= signsPrLine; charNr++) {
-                    let nrOfSpacesBeforeHashes = (signsPrLine - nrOfHashes) / 2;
-                    if (charNr <= nrOfSpacesBeforeHashes) {
-                        writeSpace();
-                    } else if (charNr > nrOfSpacesBeforeHashes + nrOfHashes) {
+                let nrOfHashes = charsPrLine - (lineIndex * 2);
+                for (let charNr = 1; charNr <= charsPrLine; charNr++) {
+                    let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
+                    let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
+                    if (isWhitespace) {
                         writeSpace();
                     } else {
                         writeHash();
@@ -72,12 +75,11 @@
                 writeLineBreak();
             }
             for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
-                let nrOfHashes = 8 - (lineIndex * 2);
-                for (let charNr = 1; charNr <= signsPrLine; charNr++) {
-                    let nrOfSpacesBeforeHashes = (signsPrLine - nrOfHashes) / 2;
-                    if (charNr <= nrOfSpacesBeforeHashes) {
-                        writeSpace();
-                    } else if (charNr > nrOfSpacesBeforeHashes + nrOfHashes) {
+                let nrOfHashes = charsPrLine - (lineIndex * 2);
+                for (let charNr = 1; charNr <= charsPrLine; charNr++) {
+                    let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
+                    let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
+                    if (isWhitespace) {
                         writeSpace();
                     } else {
                         writeHash();
@@ -97,7 +99,7 @@
         // ##        ##
         //#            # 
         function printHashesThree() {
-            const signsPrLine = 13
+            const charsPrLine = 13
         }
     </script>
 
