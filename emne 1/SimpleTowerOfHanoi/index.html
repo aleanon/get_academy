@@ -130,9 +130,9 @@
         }
 
         function createButton(towerKind, toTowerIndex, diskSize) {
-            let isDisabled = buttonMovesToCurrentPosition(diskSize, toTowerIndex)
-                || buttonMovesToIllegalPosition(diskSize, toTowerIndex)
-                || !diskIsMovable(diskSize, toTowerIndex);
+            let isDisabled = movesToCurrentPosition(diskSize, toTowerIndex)
+                || movesToIllegalPosition(diskSize, toTowerIndex)
+                || !diskIsOnTop(diskSize, toTowerIndex);
 
             if (isDisabled) {
                 return /*html*/ `<button disabled>${towerKind} tårn</button>`;
@@ -142,19 +142,19 @@
             }
         }
 
-        function buttonMovesToCurrentPosition(diskSize, toTowerIndex) {
+        function movesToCurrentPosition(diskSize, toTowerIndex) {
             if (diskSize == "Small") return smallDiskTowerIndex == toTowerIndex
             if (diskSize == "Medium") return mediumDiskTowerIndex == toTowerIndex
             if (diskSize == "Large") return largeDiskTowerIndex == toTowerIndex
         }
 
-        function buttonMovesToIllegalPosition(diskSize, toTowerIndex) {
+        function movesToIllegalPosition(diskSize, toTowerIndex) {
             if (diskSize == "Small") return false
             if (diskSize == "Medium") return smallDiskTowerIndex == toTowerIndex
             if (diskSize == "Large") return smallDiskTowerIndex == toTowerIndex || mediumDiskTowerIndex == toTowerIndex
         }
 
-        function diskIsMovable(diskSize, toTowerIndex) {
+        function diskIsOnTop(diskSize, toTowerIndex) {
             if (diskSize == "Small") return true
             if (diskSize == "Medium") return smallDiskTowerIndex != mediumDiskTowerIndex
             if (diskSize == "Large") return smallDiskTowerIndex != largeDiskTowerIndex && mediumDiskTowerIndex != largeDiskTowerIndex
