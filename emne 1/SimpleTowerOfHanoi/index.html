@@ -137,8 +137,7 @@
             if (isDisabled) {
                 return /*html*/ `<button disabled>${towerKind} tårn</button>`;
             } else {
-                let onclickCall = "move" + diskSize + "Disk";
-                return /*html*/ `<button onclick='${onclickCall}(${toTowerIndex})'>${towerKind} tårn</button>`;
+                return /*html*/ `<button onclick="move${diskSize}Disk(${toTowerIndex})">${towerKind} tårn</button>`;
             }
         }
 
