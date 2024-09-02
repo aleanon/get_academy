@@ -67,11 +67,17 @@
         // view 
         updateView();
         function updateView() {
+            let isComplete = gameCompleted();
+            let message = isComplete ? "Du klarte det!!" : "";
+            let restartButton = isComplete ? /*html*/ `<button id="restartButton" onclick="reset()">Restart spill</button>` : "";
+
             document.getElementById('app').innerHTML = /*HTML*/`
+                <h1>${message}</h1>
                 ${createGameContainer()}
                 ${createButtonRow("Small", "liten")}
                 ${createButtonRow("Medium", "medium")}
                 ${createButtonRow("Large", "stor")}
+                ${restartButton}
             `;
         }
 
@@ -124,7 +130,10 @@
         }
 
         function createButton(towerKind, toTowerIndex, diskSize) {
-            let isDisabled = buttonMovesToCurrentPosition(diskSize, toTowerIndex) || buttonMovesToIllegalPosition(diskSize, toTowerIndex);
+            let isDisabled = buttonMovesToCurrentPosition(diskSize, toTowerIndex)
+                || buttonMovesToIllegalPosition(diskSize, toTowerIndex)
+                || !diskIsMovable(diskSize, toTowerIndex);
+
             if (isDisabled) {
                 return /*html*/ `<button disabled>${towerKind} tårn</button>`;
             } else {
@@ -143,6 +152,12 @@
             if (diskSize == "Small") return false
             if (diskSize == "Medium") return smallDiskTowerIndex == toTowerIndex
             if (diskSize == "Large") return smallDiskTowerIndex == toTowerIndex || mediumDiskTowerIndex == toTowerIndex
+        }
+
+        function diskIsMovable(diskSize, toTowerIndex) {
+            if (diskSize == "Small") return true
+            if (diskSize == "Medium") return smallDiskTowerIndex != mediumDiskTowerIndex
+            if (diskSize == "Large") return smallDiskTowerIndex != largeDiskTowerIndex && mediumDiskTowerIndex != largeDiskTowerIndex
         }
 
 
@@ -169,10 +184,17 @@
             updateView();
         }
 
-        function isComplete() {
+        function gameCompleted() {
             return smallDiskTowerIndex == rightTower
                 && mediumDiskTowerIndex == rightTower
                 && largeDiskTowerIndex == rightTower;
+        }
+
+        function reset() {
+            smallDiskTowerIndex = leftTower;
+            mediumDiskTowerIndex = leftTower;
+            largeDiskTowerIndex = leftTower;
+            updateView();
         }
 
         document.body.innerHTML += `
