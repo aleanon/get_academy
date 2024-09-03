@@ -14,6 +14,8 @@
         writeLineBreak();
         printHashesTwo();
         writeLineBreak();
+        printHashesTwov2();
+        writeLineBreak();
         printHashesThree();
 
         function writeHash() {
@@ -35,11 +37,12 @@
         //    ##
         function printHashesOne() {
             const charsPrLine = 8;
-            for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
-                let nrOfHashes = charsPrLine - (lineIndex * 2);
+            for (let nrOfHashes = 8; nrOfHashes > 0; nrOfHashes -= 2) {
+                let nrOfSpacesEachEnd = (charsPrLine - nrOfHashes) / 2;
                 for (let charNr = 1; charNr <= charsPrLine; charNr++) {
-                    let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
-                    let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
+                    let isWhitespace = (charNr <= nrOfSpacesEachEnd)
+                        || (charNr > nrOfSpacesEachEnd + nrOfHashes);
+
                     if (isWhitespace) {
                         writeSpace();
                     } else {
@@ -61,8 +64,7 @@
         //     ##
         function printHashesTwo() {
             const charsPrLine = 8;
-            for (let lineIndex = 3; lineIndex >= 0; lineIndex--) {
-                let nrOfHashes = charsPrLine - (lineIndex * 2);
+            for (let nrOfHashes = 2; nrOfHashes <= 8; nrOfHashes += 2) {
                 for (let charNr = 1; charNr <= charsPrLine; charNr++) {
                     let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
                     let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
@@ -74,10 +76,24 @@
                 }
                 writeLineBreak();
             }
-            for (let lineIndex = 0; lineIndex < 4; lineIndex++) {
-                let nrOfHashes = charsPrLine - (lineIndex * 2);
+            for (let nrOfHashes = 8; nrOfHashes > 0; nrOfHashes -= 2) {
                 for (let charNr = 1; charNr <= charsPrLine; charNr++) {
                     let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
+                    let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
+                    if (isWhitespace) {
+                        writeSpace();
+                    } else {
+                        writeHash();
+                    }
+                }
+                writeLineBreak();
+            }
+        }
+        function printHashesTwov2() {
+            const charsPrLine = 8;
+            for (let nrOfHashes of [2, 4, 6, 8, 8, 6, 4, 2]) {
+                let nrOfSpacesBeforeHashes = (charsPrLine - nrOfHashes) / 2;
+                for (let charNr = 1; charNr <= charsPrLine; charNr++) {
                     let isWhitespace = (charNr <= nrOfSpacesBeforeHashes) || (charNr > nrOfSpacesBeforeHashes + nrOfHashes);
                     if (isWhitespace) {
                         writeSpace();
@@ -99,7 +115,26 @@
         // ##        ##
         //#            # 
         function printHashesThree() {
-            const charsPrLine = 13
+            const charsPrLine = 14;
+            for (let listValue of [0, 1, 2, 3, 3, 2, 1, 0]) {
+                let nrOfHashesPrSide = listValue + 1;
+                let endingWhitespaceStartIndex = charsPrLine - listValue;
+                let endingHashesStartIndex = endingWhitespaceStartIndex - nrOfHashesPrSide;
+                let middleWhitespacesStartIndex = listValue + nrOfHashesPrSide;
+
+                for (let charIndex = 0; charIndex < charsPrLine; charIndex++) {
+                    let isWhitespace = charIndex < listValue
+                        || charIndex >= endingWhitespaceStartIndex
+                        || (charIndex >= middleWhitespacesStartIndex && charIndex < endingHashesStartIndex);
+
+                    if (isWhitespace) {
+                        writeSpace();
+                    } else {
+                        writeHash();
+                    }
+                }
+                writeLineBreak();
+            }
         }
     </script>
 
