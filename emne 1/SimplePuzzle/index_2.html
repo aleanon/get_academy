@@ -60,12 +60,11 @@
         }
 
         function allowedToPlacePiece(hasTop, hasRight, hasBottom, hasLeft) {
-            if (row == 0 && hasTop) return false;
-            if (row == 24 && hasBottom) return false;
-            if (column == 24 && hasRight) return false;
-            if (column == 0 && hasLeft) return false;
-            if (row > 24) return false;
-            return true;
+            return !(row == 0 && hasTop)
+                && !(row == 24 && hasBottom)
+                && !(column == 24 && hasRight)
+                && !(column == 0 && hasLeft)
+                && !(row > 24)
         }
 
         function incrementColumnRowColor() {
