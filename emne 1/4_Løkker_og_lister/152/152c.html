@@ -56,6 +56,7 @@
     updateView();
     function updateView() {
         document.getElementById("app").innerHTML = /*HTML*/ `
+            ${isComplete() ? `<h2>Du klarte det!!</h2>` : ""}
             <div id="grid" style="
                 grid-template-rows: repeat(${boardHeight}, 1fr);
                 grid-template-columns: repeat(${boardWidth}, 1fr);
@@ -78,9 +79,8 @@
         let emptyCellIndex = board.indexOf(' ');
         if (!isAdjecentCell(index, emptyCellIndex)) return;
 
-        let number = board[index];
+        board[emptyCellIndex] = board[index];
         board[index] = ' ';
-        board[emptyCellIndex] = number;
         updateView();
     }
 

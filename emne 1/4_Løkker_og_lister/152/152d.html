@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>152D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>
+<script>
+    let cleanedText = "";
+    let textAreaWidth = 40;
+    let textAreaHeight = 40;
+
+    updateView();
+    function updateView() {
+        document.getElementById('app').innerHTML = /* HTML */ `
+            <textarea oninput="cleanText(this.value)">${cleanedText ?? ""}</textarea>
+        `;
+    }
+
+    function cleanText(inputText) {
+        let pattern = /[a-zæøå ]/gmi;
+        cleanedText = inputText.match(pattern).join("");
+        updateView();
+    }
+</script>
