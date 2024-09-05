@@ -90,10 +90,8 @@
         let emptyX = emptyCellIndex % 3;
         let emptyY = Math.floor(emptyCellIndex / 3);
 
-        return (emptyX == numberX && emptyY == numberY - 1)
-            || (emptyX == numberX && emptyY == numberY + 1)
-            || (emptyY == numberY && emptyX == numberX - 1)
-            || (emptyY == numberY && emptyX == numberX + 1)
+        return (emptyX == numberX && Math.abs(emptyY - numberY) == 1)
+            || (emptyY == numberY && Math.abs(emptyX - numberX) == 1)
     }
 
     function isComplete() {
