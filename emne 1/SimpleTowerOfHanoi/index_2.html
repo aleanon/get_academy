@@ -64,38 +64,45 @@
 
         // The index number of each disk in disks determines it's size, 0 is the smallest.
         // Each disks value is the tower index that disk is located at
-        let disks = [leftTower, leftTower, leftTower];
+        let nrOfDisks = 3;
+        let disks;
         // Each tower in towers stores the disks that are at that tower, the list contains the disk index of each disk
-        let towers = [[], [], []];
+        let towers;
 
         // Stores the disk index of the dragged disk
         let dragged;
 
-        // Stores the elements of draggable 
+        // Stores the elements of draggable and drop zones
         let draggable;
         let dropZoneLeftTower;
         let dropZoneMidTower;
         let dropZoneRightTower;
 
-        updateTowers();
-        updateView();
+        startGame(3);
 
-        function updateTowers() {
-            let index = disks.length - 1;
-            for (disk of disks) {
-                towers[disk].push(index);
-                index--;
+        function startGame() {
+            disks = [];
+            for (let diskNr = 1; diskNr <= nrOfDisks; diskNr++) {
+                disks.push(leftTower)
             }
+
+            towers = [[], [], []];
+            for (let i = disks.length - 1; i >= 0; i--) {
+                towers[leftTower].push(i)
+            }
+
+            updateView();
         }
 
         // view 
         function updateView() {
             let isComplete = gameCompleted();
             let message = isComplete ? "Du klarte det!!" : "";
-            let restartButton = isComplete ? /*html*/ `<button id="restartButton" onclick="reset()">Restart spill</button>` : "";
+            let restartButton = isComplete ? /*html*/ `<button id="restartButton" onclick="startGame()">Restart spill</button>` : "";
 
             document.getElementById('app').innerHTML = /*HTML*/`
                 <h1>${message}</h1>
+                <input type="number" min="3" max="7" step="1" value="${nrOfDisks}" onchange="nrOfDisks=this.value; startGame()">
                 ${createGameContainer()}
                 ${restartButton}
             `;
@@ -197,16 +204,6 @@
 
         function gameCompleted() {
             return towers[rightTower].length === disks.length;
-        }
-
-        function reset() {
-            for (let i = 0; i < disks.length; i++) {
-                disks[i] = leftTower
-            }
-            towers = [[], [], []];
-
-            updateTowers();
-            updateView();
         }
 
         function establishEventListeners() {
