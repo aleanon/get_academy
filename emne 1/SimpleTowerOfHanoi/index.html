@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SimpleTowerOfHanoi</title>
     <style>
         .game-container {
             display: flex;
@@ -67,7 +67,7 @@
         // view 
         updateView();
         function updateView() {
-            let isComplete = gameCompleted();
+            let isComplete = gameIsCompleted();
             let message = isComplete ? "Du klarte det!!" : "";
             let restartButton = isComplete ? /*html*/ `<button id="restartButton" onclick="reset()">Restart spill</button>` : "";
 
@@ -130,35 +130,27 @@
         }
 
         function createButton(towerKind, toTowerIndex, diskSize) {
-            let isDisabled = movesToCurrentPosition(diskSize, toTowerIndex)
-                || movesToIllegalPosition(diskSize, toTowerIndex)
-                || !diskIsOnTop(diskSize, toTowerIndex);
-
-            if (isDisabled) {
-                return /*html*/ `<button disabled>${towerKind} tårn</button>`;
-            } else {
+            if (isLegalMove(diskSize, toTowerIndex)) {
                 return /*html*/ `<button onclick="move${diskSize}Disk(${toTowerIndex})">${towerKind} tårn</button>`;
+            } else {
+                return "";
             }
         }
-
-        function movesToCurrentPosition(diskSize, toTowerIndex) {
-            if (diskSize == "Small") return smallDiskTowerIndex == toTowerIndex
-            if (diskSize == "Medium") return mediumDiskTowerIndex == toTowerIndex
-            if (diskSize == "Large") return largeDiskTowerIndex == toTowerIndex
+        function isLegalMove(diskSize, toTowerIndex) {
+            if (diskSize == "Small") {
+                return smallDiskTowerIndex != toTowerIndex
+            } else if (diskSize == "Medium") {
+                return smallDiskTowerIndex != toTowerIndex
+                    && mediumDiskTowerIndex != toTowerIndex
+                    && smallDiskTowerIndex != mediumDiskTowerIndex
+            } else if (diskSize == "Large") {
+                return smallDiskTowerIndex != toTowerIndex
+                    && mediumDiskTowerIndex != toTowerIndex
+                    && smallDiskTowerIndex != largeDiskTowerIndex
+                    && mediumDiskTowerIndex != largeDiskTowerIndex
+                    && largeDiskTowerIndex != toTowerIndex
+            }
         }
-
-        function movesToIllegalPosition(diskSize, toTowerIndex) {
-            if (diskSize == "Small") return false
-            if (diskSize == "Medium") return smallDiskTowerIndex == toTowerIndex
-            if (diskSize == "Large") return smallDiskTowerIndex == toTowerIndex || mediumDiskTowerIndex == toTowerIndex
-        }
-
-        function diskIsOnTop(diskSize, toTowerIndex) {
-            if (diskSize == "Small") return true
-            if (diskSize == "Medium") return smallDiskTowerIndex != mediumDiskTowerIndex
-            if (diskSize == "Large") return smallDiskTowerIndex != largeDiskTowerIndex && mediumDiskTowerIndex != largeDiskTowerIndex
-        }
-
 
         // controller
         function moveSmallDisk(toTowerIndex) {
@@ -168,22 +160,18 @@
         }
 
         function moveMediumDisk(toTowerIndex) {
-            if (smallDiskTowerIndex == toTowerIndex) return;
-            if (smallDiskTowerIndex == mediumDiskTowerIndex) return;
             mediumDiskTowerIndex = toTowerIndex;
 
             updateView();
         }
 
         function moveLargeDisk(toTowerIndex) {
-            if (smallDiskTowerIndex == toTowerIndex || mediumDiskTowerIndex == toTowerIndex) return;
-            if (smallDiskTowerIndex == largeDiskTowerIndex || mediumDiskTowerIndex == largeDiskTowerIndex) return;
             largeDiskTowerIndex = toTowerIndex;
 
             updateView();
         }
 
-        function gameCompleted() {
+        function gameIsCompleted() {
             return smallDiskTowerIndex == rightTower
                 && mediumDiskTowerIndex == rightTower
                 && largeDiskTowerIndex == rightTower;
