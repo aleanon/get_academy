@@ -6,7 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SimpleTowerOfHanoi</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 60vw;
+            height: 50vh;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            width: 60px;
+            height: 30px;
+            padding: 10px;
+            border-radius: 0.5em;
+            font-size: 1.5em;
+            align-self: center;
+            margin-bottom: 5%;
+        }
+
+        button {
+            width: 200px;
+            height: 30px;
+            border-radius: 0.5em;
+            font-size: 1.5em;
+            margin-top: 5%;
+            align-self: center;
+        }
+
         .game-container {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             margin: 0 auto;
@@ -18,12 +65,12 @@
         }
 
         .tower {
-            width: 100px;
-            height: 120px;
+            width: 150px;
+            height: 200px;
             display: flex;
             flex-direction: column-reverse;
             align-items: center;
-            border-bottom: 8px solid darkred;
+            border-bottom: 8px solid brown;
         }
 
         .tower-container::before {
@@ -33,17 +80,18 @@
             left: 50%;
             transform: translateX(-50%);
             width: 8px;
-            height: 120px;
+            height: 200px;
             z-index: -10;
-            background-color: darkred;
+            background-color: brown;
         }
 
         .disk {
             width: 20px;
             height: 20px;
-            background-color: blue;
-            border: 4px solid gray;
+            background-color: chartreuse;
+            /* border: 2px solid gray; */
             margin-bottom: 5px;
+            border-radius: 40%;
         }
 
         .draggable {
@@ -58,6 +106,7 @@
 
     <script>
         // model
+        const diskColors = ["green", "yellow", "blue", "purple", "chartreuse", "aqua", "darkgoldenrod"]
         const leftTower = 0;
         const midTower = 1;
         const rightTower = 2;
@@ -101,6 +150,7 @@
             let restartButton = isComplete ? /*html*/ `<button id="restartButton" onclick="startGame()">Restart spill</button>` : "";
 
             document.getElementById('app').innerHTML = /*HTML*/`
+                <h1>Towers of Hanoi</h1>
                 <h1>${message}</h1>
                 <input type="number" min="3" max="7" step="1" value="${nrOfDisks}" onchange="nrOfDisks=this.value; startGame()">
                 ${createGameContainer()}
@@ -142,10 +192,9 @@
         }
 
         function createDisksAtTower(towerIndex) {
-            let tower = towers[towerIndex];
             let baseDiskSize = 30;
             let html = "";
-            for (diskIndex of tower) {
+            for (diskIndex of towers[towerIndex]) {
                 html += createDisk(baseDiskSize + (diskIndex * 20), towerIndex, diskIndex);
             }
             return html;
@@ -158,11 +207,13 @@
                     id="draggable${towerIndex}" 
                     draggable="true" 
                     class="disk draggable" 
-                    style="width: ${width}px"
+                    style="width: ${width}px;
+                        background-color: ${diskColors[diskIndex]}
+                    "
                 ></div>
                 `;
             }
-            return /*html*/ `<div class="disk" style="width: ${width}px"></div>`;
+            return /*html*/ `<div class="disk" style="width: ${width}px; background-color: ${diskColors[diskIndex]}"></div>`;
         }
 
         function islegalMove(diskIndex, toTowerIndex) {
