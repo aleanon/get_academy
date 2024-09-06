@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleTowerOfHanoi</title>
+    <style>
+        .game-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .tower-container {
+            position: relative;
+        }
+
+        .tower {
+            width: 100px;
+            height: 120px;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            border-bottom: 8px solid darkred;
+        }
+
+        .tower-container::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 120px;
+            z-index: -10;
+            background-color: darkred;
+        }
+
+        .disk {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            border: 4px solid gray;
+            margin-bottom: 5px;
+        }
+
+        .draggable {
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+    </div>
+
+    <script>
+        // model
+        const leftTower = 0;
+        const midTower = 1;
+        const rightTower = 2;
+
+        // The index number of each disk in disks determines it's size, 0 is the smallest.
+        // Each disks value is the tower index that disk is located at
+        let disks = [leftTower, leftTower, leftTower];
+        // Each tower in towers stores the disks that are at that tower, the list contains the disk index of each disk
+        let towers = [[], [], []];
+
+        // Stores the disk index of the dragged disk
+        let dragged;
+
+        // Stores the elements of draggable 
+        let draggable;
+        let dropZoneLeftTower;
+        let dropZoneMidTower;
+        let dropZoneRightTower;
+
+        updateTowers();
+        updateView();
+
+        function updateTowers() {
+            let index = disks.length - 1;
+            for (disk of disks) {
+                towers[disk].push(index);
+                index--;
+            }
+        }
+
+        // view 
+        function updateView() {
+            let isComplete = gameCompleted();
+            let message = isComplete ? "Du klarte det!!" : "";
+            let restartButton = isComplete ? /*html*/ `<button id="restartButton" onclick="reset()">Restart spill</button>` : "";
+
+            document.getElementById('app').innerHTML = /*HTML*/`
+                <h1>${message}</h1>
+                ${createGameContainer()}
+                ${restartButton}
+            `;
+
+            if (towers[leftTower].length > 0) {
+                draggable = document.getElementById('draggable0');
+            } else if (towers[midTower].length > 0) {
+                draggable = document.getElementById('draggable1');
+            } else if (towers[midTower].length > 0) {
+                draggable = document.getElementById('draggable2');
+            }
+
+            dropZoneLeftTower = document.getElementById('dropzone0');
+            dropZoneMidTower = document.getElementById('dropzone1');
+            dropZoneRightTower = document.getElementById('dropzone2');
+            establishEventListeners();
+        }
+
+        function createGameContainer() {
+            return /*HTML*/ `
+                <div class="game-container">
+                    ${createTower(leftTower)}
+                    ${createTower(midTower)}
+                    ${createTower(rightTower)}
+                </div>
+            `;
+        }
+
+        function createTower(towerIndex) {
+            return /*html*/ `
+                <div id="dropzone${towerIndex}" class="tower-container">
+                    <div class="tower">
+                        ${createDisksAtTower(towerIndex)}                           
+                    </div>
+                </div>
+            `;
+        }
+
+        function createDisksAtTower(towerIndex) {
+            let tower = towers[towerIndex];
+            let baseDiskSize = 30;
+            let html = "";
+            for (diskIndex of tower) {
+                html += createDisk(baseDiskSize + (diskIndex * 20), towerIndex, diskIndex);
+            }
+            return html;
+        }
+
+        function createDisk(width, towerIndex, diskIndex) {
+            if (diskIsOnTop(diskIndex)) {
+                return /*html*/ `
+                <div onmouseover="assignDraggable(${towerIndex}, this.id)" 
+                    id="draggable${towerIndex}" 
+                    draggable="true" 
+                    class="disk draggable" 
+                    style="width: ${width}px"
+                ></div>
+                `;
+            }
+            return /*html*/ `<div class="disk" style="width: ${width}px"></div>`;
+        }
+
+        function islegalMove(diskIndex, toTowerIndex) {
+            return !movesToIllegalPosition(diskIndex, toTowerIndex)
+                && !movesToCurrentPosition(diskIndex, toTowerIndex)
+                && diskIsOnTop(diskIndex)
+        }
+
+        function movesToCurrentPosition(diskIndex, toTowerIndex) {
+            return disks[diskIndex] == toTowerIndex;
+        }
+
+        function movesToIllegalPosition(diskIndex, toTowerIndex) {
+            let tower = towers[toTowerIndex];
+            if (tower[tower.length - 1] < diskIndex) return true;
+            return false;
+        }
+
+        function diskIsOnTop(diskIndex) {
+            let currentTower = towers[disks[diskIndex]];
+            return currentTower[currentTower.length - 1] === diskIndex;
+        }
+
+        function assignDraggable(towerIndex, id) {
+            draggable = document.getElementById(id);
+            let tower = towers[towerIndex];
+            dragged = tower[tower.length - 1];
+        }
+
+        function moveDisk(diskIndex, toTowerIndex) {
+            if (!islegalMove(diskIndex, toTowerIndex)) return
+
+            towers[disks[diskIndex]].pop();
+            towers[toTowerIndex].push(diskIndex);
+            disks[diskIndex] = toTowerIndex;
+
+            updateView();
+        }
+
+        function gameCompleted() {
+            return towers[rightTower].length === disks.length;
+        }
+
+        function reset() {
+            for (let i = 0; i < disks.length; i++) {
+                disks[i] = leftTower
+            }
+            towers = [[], [], []];
+
+            updateTowers();
+            updateView();
+        }
+
+        function establishEventListeners() {
+            dropZoneLeftTower.ondragover = function (event) {
+                event.preventDefault()
+            };
+            dropZoneMidTower.ondragover = function (event) {
+                event.preventDefault()
+            };
+            dropZoneRightTower.ondragover = function (event) {
+                event.preventDefault()
+            };
+
+            dropZoneLeftTower.ondrop = function (event) {
+                event.preventDefault();
+                moveDisk(dragged, leftTower)
+            };
+            dropZoneMidTower.ondrop = function (event) {
+                event.preventDefault();
+                moveDisk(dragged, midTower)
+            };
+            dropZoneRightTower.ondrop = function (event) {
+                event.preventDefault();
+                moveDisk(dragged, rightTower);
+            };
+        }
+    </script>
+</body>
+
+</html>
