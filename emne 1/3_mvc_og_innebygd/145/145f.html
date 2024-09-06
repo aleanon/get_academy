@@ -258,5 +258,20 @@
         updateView();
     }
 
+    let testsecret = "hangmanallday";
+    let guessedCorr = "_____________";
+
+    function evaluateGuess(secret, guessedLetter, previousIndex, guessedC) {
+        const index = secret.indexOf(guessedLetter);
+
+        if (index == -1) return guessedC
+
+        const totalIndex = index + previousIndex;
+        const newString = guessedC.substring(0, totalIndex) + guessedLetter + guessedC.substring(totalIndex + 1);
+        const secretSubstring = secret.substring(index + 1);
+        return evaluateGuess(secretSubstring, guessedLetter, totalIndex + 1, newString)
+    }
+
+
     updateView()
 </script>
