@@ -12,11 +12,6 @@
     <script>
         // model
         let coinsInMachine, coinsInserted, coinsReturned, cokesInStore, isCokeInDelivery;
-        const price = 25;
-        const oneKr = 0;
-        const fiveKr = 1;
-        const tenKr = 2;
-        const twentyKr = 3;
 
         function initModel() {
             coinsInMachine = [0, 0, 0, 0];
@@ -32,23 +27,23 @@
         QUnit.test('kjøpe cola - vekslepengene - alle mynter i automat', function (assert) {
             // arrange
             initModel();
-            insertCoin(twentyKr);
-            insertCoin(twentyKr);
-            coinsInMachine = [5, 5, 5, 5]
+            insertCoin(20);
+            insertCoin(20);
+            coinsInMachine = [5, 5, 5, 5];
 
             // act
             buyCoke();
 
             // assert
             assert.deepEqual(coinsReturned, [0, 1, 1, 0]);
-            assert.deepEqual(coinsInMachine, [5, 4, 4, 7]);
+            assert.deepEqual(coinsInMachine, [5, 4, 4, 5]);
         });
 
         QUnit.test('kjøpe cola - vekslepengene - kun 5kr og 1kr i automat', function (assert) {
             // arrange
             initModel();
-            insertCoin(twentyKr);
-            insertCoin(twentyKr);
+            insertCoin(20);
+            insertCoin(20);
             coinsInMachine = [5, 5, 0, 0]
 
             // act
@@ -62,8 +57,8 @@
         QUnit.test('kjøpe cola - nok penger', function (assert) {
             // arrange
             initModel();
-            insertCoin(twentyKr);
-            insertCoin(fiveKr);
+            insertCoin(20);
+            insertCoin(5);
 
             // act
             buyCoke();
@@ -75,7 +70,7 @@
         QUnit.test('kjøpe cola - for lite penger', function (assert) {
             // arrange
             initModel();
-            insertCoin(fiveKr);
+            insertCoin(5);
 
             // act
             buyCoke();
@@ -87,8 +82,8 @@
         QUnit.test('angre', function (assert) {
             // arrange
             initModel();
-            insertCoin(oneKr);
-            insertCoin(fiveKr);
+            insertCoin(1);
+            insertCoin(5);
 
             // act
             returnCoins();
@@ -103,8 +98,8 @@
         QUnit.test('ta myntene', function (assert) {
             // arrange
             initModel();
-            insertCoin(oneKr);
-            insertCoin(fiveKr);
+            insertCoin(1);
+            insertCoin(5);
             returnCoins();
 
             // act

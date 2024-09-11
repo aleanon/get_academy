@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>153A</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const listItemsPrPage = 10;
+    let numbers = getNumbers();
+    let activePage = 1;
+
+    function getNumbers() {
+        let numbers = [];
+        for (let i = 1; i <= 130; i++) {
+            numbers.push(i);
+        }
+        return numbers;
+    }
+
+    updateView();
+    function updateView() {
+        document.getElementById("app").innerHTML = `
+            ${createNumbersListHtml()}
+            ${createNavButtons()}
+        `;
+    }
+
+    function createNavButtons(onclick, text) {
+        let html = "";
+        let chunkStart = 0;
+        let chunkEnd = chunkStart + listItemsPrPage;
+        for (let pageNr = 1; pageNr <= numbers.length / listItemsPrPage; pageNr++) {
+            if (pageNr == activePage) {
+                html += `<button disabled>${chunkStart + 1..chunkEnd + 1}</a>`
+            } else {
+                html += `<button onclick="setPage(${pageNr})">${(chunkStart + 1) + '..' + (chunkEnd)}</button>`;
+            }
+            chunkStart = chunkEnd;
+            chunkEnd = chunkStart + listItemsPrPage;
+            if (chunkEnd > numbers.length - 1) {
+                chunkEnd = numbers.length - 1;
+            }
+        }
+        return html;
+    }
+
+    function createNumbersListHtml() {
+        let html = "";
+        let startIndex = (activePage - 1) * listItemsPrPage;
+        for (let i = startIndex; i < startIndex + listItemsPrPage; i++) {
+            html += `<li class="number">${numbers[i]}</li>`;
+        }
+        return html;
+    }
+
+    function setPage(pageNr) {
+        activePage = pageNr;
+        updateView();
+    }
+</script>
+
+</html>

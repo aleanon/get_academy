@@ -2,7 +2,7 @@ const oneKr = 0;
 const fiveKr = 1;
 const tenKr = 2;
 const twentyKr = 3;
-const price = 25;
+const cokePrice = 25;
 
 
 let coinsInMachine = [
@@ -24,6 +24,6 @@ let coinsReturned = [
     0, // tjuekroninger
 ];
 
-let cokesInStore = 10;
+let cokesInStore = 2;
 let isCokeInDelivery = false;
 let errorMessage = '';
