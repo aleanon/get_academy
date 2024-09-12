@@ -11,7 +11,7 @@ function buyCoke() {
     
     if (!inStockAndEnoughInserted(valueOfInsertedCoins)) return;
 
-    takeInsertedCoins();
+    moveInsertedCoinsToMachine();
 
     returnChange(valueOfInsertedCoins - cokePrice);
 
@@ -56,7 +56,7 @@ function returnChange(change) {
     }
 }
 
-function takeInsertedCoins() {
+function moveInsertedCoinsToMachine() {
     for (let i = 0; i < coinsInserted.length; i++) {
         coinsInMachine[i] += coinsInserted[i];
     }
