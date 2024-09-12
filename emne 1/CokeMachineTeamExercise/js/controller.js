@@ -1,4 +1,3 @@
-
 /* 
     1. Sjekke om du har nok penger (og få opp feilmelding hvis ikke) OK
     2. Sjekke at det er cola i maskinen (få opp feilmelding hvis ikke) OK
@@ -8,7 +7,7 @@
     6. Myntene du har betalt for cola skal inn i maskinen (coinsInMachine) OK
 */
 function buyCoke() {
-    let valueOfInsertedCoins = valueFromCoinCounts(coinsInserted);
+    const valueOfInsertedCoins = valueFromCoinCounts(coinsInserted);
     
     if (!inStockAndEnoughInserted(valueOfInsertedCoins)) return;
 
@@ -30,16 +29,19 @@ function insertCoin(coinIndex) {
 function returnCoins() {
     coinsReturned = [...coinsInserted];
     coinsInserted = [0, 0, 0, 0];
+    errorMessage = "";
     updateView();
 }
 
 function takeCoins() {
     coinsReturned = [0, 0, 0, 0];
+    errorMessage = "";
     updateView();
 }
 
 function takeCoke() {
     isCokeInDelivery = false;
+    errorMessage = "";
     updateView();
 }
 
