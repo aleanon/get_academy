@@ -10,7 +10,7 @@ function buyCoke() {
     const valueOfInsertedCoins = valueFromCoinCounts(coinsInserted);
     
     if (!inStockAndEnoughInserted(valueOfInsertedCoins)) return;
-
+    
     moveInsertedCoinsToMachine();
 
     returnChange(valueOfInsertedCoins - cokePrice);
