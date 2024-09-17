@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tests</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script src="lib.js"></script>
+</head>
+
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script>
+        QUnit.test("Is valid email address", function (assert) {
+            let mailAddress = "thisis.avalid@mailaddress.com";
+            let isValidAddress = isEmailAddress(mailAddress);
+            assert.equal(isValidAddress, true);
+        })
+
+        QUnit.test("One dot to many before @", function (assert) {
+            let mailAddress = "this.isnot.avalid@mailaddress.com";
+            let isValidAddress = isEmailAddress(mailAddress);
+            assert.equal(isValidAddress, false);
+        });
+
+        QUnit.test("One dot to many after @", function (assert) {
+            let mailAddress = "this.isnotavalid@mail.address.com";
+            let isValidAddress = isEmailAddress(mailAddress);
+            assert.equal(isValidAddress, false);
+        })
+
+        QUnit.test("One @ to many before @", function (assert) {
+            let mailAddress = "this.isnota@valid@mailaddress.com";
+            let isValidAddress = isEmailAddress(mailAddress);
+            assert.equal(isValidAddress, false);
+        });
+
+        QUnit.test("One @ to many after @", function (assert) {
+            let mailAddress = "this.isnotavalid@mailad@dress.com";
+            let isValidAddress = isEmailAddress(mailAddress);
+            assert.equal(isValidAddress, false);
+        })
+    </script>
+
+</body>
+
+</html>
