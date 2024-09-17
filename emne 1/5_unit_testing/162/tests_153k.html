@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests for 153K</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script src="153k.html"></script>
+</head>
+
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script>
+        let numbers = [];
+        let chosenBar;
+        let inputValue;
+        let errorMessage = "";
+
+        function initializeModel() {
+            numbers = [7, 3, 1, 5, 8];
+            chosenBar = null;
+            inputValue = null;
+            errorMessage = "";
+        }
+
+        function UpdateView() { }
+
+        Qunit.test("Input valid number", function (assert) {
+
+        });
+    </script>
+</body>
+
+</html>
+
+
+function inputValuechange(value) {
+if (value < 1 || value> 10) {
+    errorMessage = "Verdien må være mellom 1 og 10";
+    inputValue = null;
+    updateView();
+    return;
+    };
+    errorMessage = "";
+
+    inputValue = value;
+    }
+
+    function selectPillar(index) {
+    if (chosenBar == index) {
+    chosenBar = null;
+    } else {
+    chosenBar = index;
+    }
+
+    errorMessage = "";
+    updateView();
+    }
+
+    function removeSelectedPillar() {
+    if (chosenBar == null) return;
+
+    errorMessage = "";
+    numbers.splice(chosenBar, 1);
+    chosenBar = null;
+    updateView();
+    }
+
+    function changeSelectedPillar() {
+    if (chosenBar == null || inputValue == null) return;
+
+    errorMessage = "";
+    numbers[chosenBar] = inputValue;
+    inputValue = null;
+    updateView();
+    }
+
+    function addPillar() {
+    if (inputValue == null) {
+    errorMessage = "Mangler verdi til stolpe";
+    updateView();
+    return;
+    };
+
+    numbers.push(inputValue)
+    updateView();
+    }
