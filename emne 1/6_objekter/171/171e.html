@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>171E</title>
+</head>
+
+<body>
+    <textarea oninput="countWords(this.value)" style="width: 700px; height: 400px;"></textarea>
+    <div id="word-count"></div>
+
+    <script>
+
+        function countWords(text) {
+            let wordCounts = {};
+            let words = text.trim().split(' ');
+            for (let word of words) {
+                if (wordCounts[word]) {
+                    wordCounts[word]++
+                } else {
+                    wordCounts[word] = 1;
+                }
+            }
+
+            document.getElementById("word-count").innerHTML = createWordCountHtml(wordCounts);
+        }
+
+        function createWordCountHtml(wordCounts) {
+            let listItems = "";
+            for (let word in wordCounts) {
+                if (word != "") {
+                    listItems += /*html*/ `
+                        <li>${word}: ${wordCounts[word]}</li>
+                    `;
+                }
+            }
+            return /*html*/ `
+                <ul>
+                    ${listItems}
+                </ul>
+            `;
+        }
+    </script>
+</body>
+
+</html>
