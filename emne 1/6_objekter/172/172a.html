@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>172A</title>
+    <style>
+        table {
+            display: flex;
+            flex-direction: column;
+        }
+
+        tr {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script>
+    let todoList = [
+        {
+            text: "Clean house",
+            doneDate: null,
+            responsibility: "Aleksander"
+        }
+    ];
+    view();
+
+    function view() {
+        document.getElementById("app").innerHTML = /*HTML*/ `
+            <h1>Todo</h1>
+            ${createListHtml()}            
+        `;
+    }
+
+    function createListHtml() {
+        let tableRows = "";
+        for (let i = 0; i < todoList.length; i++) {
+            let todo = todoList[i];
+            tableRows += /*HTML*/ `
+                <tr class="todo-item">
+                    <label for="todo-${i}">${todo.text}</label>
+                    <input type="checkbox" id="todo-${i}" ${todo.doneDate ? "checked" : ""} onclick="${todoList[i].doneDate = Date.now().toLocaleString()}">
+                    <p>${todo.doneDate ? todo.doneDate : ""}</p>
+                    <span class="responsibility">${todo.responsibility}</span>
+                </tr>
+            `;
+        }
+        return /*HTML*/ `<table>
+                <tr>Description Is Done Date done Responsibility</tr>
+                ${tableRows}
+            </table>`;
+    }
+</script>
+
+</html>
