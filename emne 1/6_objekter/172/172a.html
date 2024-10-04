@@ -7,13 +7,23 @@
     <title>172A</title>
     <style>
         table {
-            display: flex;
-            flex-direction: column;
+            border: solid grey 1px;
+            /* border-collapse: collapse; */
         }
 
-        tr {
-            display: flex;
-            flex-direction: row;
+
+        td {
+            /* border: solid grey 1px; */
+            text-align: center;
+        }
+
+        .description {
+            width: 150px;
+            text-align: left;
+        }
+
+        .date-field {
+            min-width: 160px;
         }
     </style>
 </head>
@@ -25,37 +35,191 @@
 <script>
     let todoList = [
         {
+            id: 1,
             text: "Clean house",
             doneDate: null,
-            responsibility: "Aleksander"
+            responsibility: "Aleksander",
+            editing: false,
         }
     ];
-    view();
+    let nextId = 2;
+    let responsibilitySelector = null;
+    let filter = (list) => { return [...list] }
+    let sort = (list) => { return list }
+    let newTaskDescription = "";
+    let newTaskResponsibility = "";
 
-    function view() {
+    updateView();
+
+    function updateView() {
         document.getElementById("app").innerHTML = /*HTML*/ `
             <h1>Todo</h1>
-            ${createListHtml()}            
+            ${createSelectResponsibilityHtml()}
+            ${createTableHtml()}            
+            <div>
+                <label for="input-description">Description:</label>
+                <input id="input-description" type="text" oninput="newTaskDescription=this.value">
+                <label for="input-responsibility" >Responsibility:</label>
+                <input id="input-responsibility" type="text" oninput="newTaskResponsibility=this.value">
+                <button onclick="addTask()">Add Task</button>
+            </div>
         `;
     }
 
-    function createListHtml() {
+    function createSelectResponsibilityHtml() {
+        let responsibles = findAllResponsible();
+        let optionsHtml = `<option ${!responsibilitySelector ? "selected" : ""} value="NoFilter">No filter</option>`;
+        for (responsible of responsibles) {
+            let isSelected = responsibilitySelector == responsible;
+            optionsHtml += /*HTML*/`<option ${isSelected ? "selected" : ""} value="${responsible}">${responsible}</option>`;
+        }
+        return /*HTML*/ `<select value="${responsibilitySelector}" onchange="filterByResponsible(this.value)">${optionsHtml}</select>`;
+    }
+
+    function createTableHtml() {
         let tableRows = "";
-        for (let i = 0; i < todoList.length; i++) {
-            let todo = todoList[i];
+        let filteredList = filter(todoList);
+        let sortedList = sort(filteredList);
+        for (let todo of sortedList) {
+            let isChecked = todo.doneDate != null;
             tableRows += /*HTML*/ `
                 <tr class="todo-item">
-                    <label for="todo-${i}">${todo.text}</label>
-                    <input type="checkbox" id="todo-${i}" ${todo.doneDate ? "checked" : ""} onclick="${todoList[i].doneDate = Date.now().toLocaleString()}">
-                    <p>${todo.doneDate ? todo.doneDate : ""}</p>
-                    <span class="responsibility">${todo.responsibility}</span>
+                    <td class="description">${createDescriptionHtml(todo.editing, todo)}</td>
+                    <td><input type="checkbox" id="todo-${todo.id}" ${isChecked ? "checked" : ""} onclick="checkTask(${todo.id}, this.checked)"></td>
+                    <td><p>${todo.doneDate ? todo.doneDate : ""}</p></td>
+                    <td class="responsibility"><p>${createResponsibilityHtml(todo.editing, todo)}</p></td>
+                    <td><button onclick="deleteTask(${todo.id})">Delete</button></td>
+                    <td><button onclick="toggleEdit(${todo.id})">${todo.editing ? "Stop Edit" : "Edit"}</button></td>
                 </tr>
             `;
         }
         return /*HTML*/ `<table>
-                <tr>Description Is Done Date done Responsibility</tr>
+                <tr>
+                    <th>Description</th>
+                    <th>Is Done</th>
+                    <th class="date-field"><button onclick="sortByDate()">Done Date</button></th>
+                    <th>Responsibility</th>
+                </tr>
                 ${tableRows}
             </table>`;
+    }
+
+    function createDescriptionHtml(isEditing, todo) {
+        if (isEditing) {
+            return /*HTML*/ `<input type="text" id="edit-description" value="${todo.text}" oninput="updateTextForTodo(${todo.id}, this.value)">`;
+        }
+        return /*HTML*/ `<p>${todo.text}</p>`;
+    }
+
+    function createResponsibilityHtml(isEditing, todo) {
+        if (isEditing) {
+            return /*HTML*/ `<input type="text" id="edit-responsibility" value="${todo.responsibility}" oninput="updateResponsibility(${todo.id}, this.value)">`;
+        }
+        return /*HTML*/ `<p>${todo.responsibility}</p>`;
+    }
+
+    function checkTask(todoId, isDone) {
+        let todoIndex = findTodoIndex(todoId);
+
+        if (isDone) {
+            let date = new Date;
+            todoList[todoIndex].doneDate = date.toLocaleString();
+        } else {
+            todoList[todoIndex].doneDate = null;
+        }
+
+        updateView();
+    }
+
+    function deleteTask(todoId) {
+        let todoIndex = findTodoIndex(todoId);
+        todoList.splice(todoIndex, 1);
+        updateView();
+    }
+
+    function updateTextForTodo(todoId, text) {
+        let todoIndex = findTodoIndex(todoId);
+        todoList[todoIndex].text = text;
+        updateView();
+    }
+
+    function updateResponsibility(todoId, text) {
+        let todoIndex = findTodoIndex(todoId);
+        todoList[todoIndex].responsibility = text;
+        updateView();
+    }
+
+    function findTodoIndex(todoId) {
+        for (let i = 0; i < todoList.length; i++) {
+            if (todoList[i].id == todoId) {
+                return i;
+            }
+        }
+        return null
+    }
+
+    function addTask() {
+        if (newTaskDescription.trim() === "") {
+            alert("Please enter a description");
+            return;
+        }
+        let newTask = {
+            id: nextId++,
+            text: newTaskDescription,
+            doneDate: null,
+            responsibility: newTaskResponsibility
+        };
+        nextId++;
+        todoList.push(newTask);
+        newTaskDescription = "";
+        newTaskResponsibility = "";
+        updateView();
+    }
+
+    function toggleEdit(todoId) {
+        let taskIndex = findTodoIndex(todoId);
+        todoList[taskIndex].editing = !todoList[taskIndex].editing;
+        updateView();
+    }
+
+    function noFilter() {
+        filter = (list) => { return [...list] };
+        updateView();
+    }
+
+    function filterByResponsible(responsible) {
+        responsibilitySelector = responsible;
+        if (responsible == "NoFilter") {
+            noFilter();
+        } else {
+            filter = (todoList) => {
+                let filteredList = [];
+                for (let todo of todoList) {
+                    if (todo.responsibility == responsible) filteredList.push(todo)
+                }
+                return filteredList;
+            }
+            updateView();
+        }
+    }
+
+    function sortByDate(reverse) {
+        sort = (todoList) => {
+            return todoList.sort((a, b) => {
+                let aDate = new Date(a.doneDate);
+                let bDate = new Date(b.doneDate);
+                return aDate - bDate;
+            });
+        }
+        updateView();
+    }
+
+    function findAllResponsible() {
+        let responsibles = [];
+        for (let task of todoList) {
+            if (!responsibles.includes(task.responsibility)) responsibles.push(task.responsibility);
+        }
+        return responsibles;
     }
 </script>
 

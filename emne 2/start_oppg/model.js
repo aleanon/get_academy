@@ -91,12 +91,7 @@ const model = {
             rating: 8.6,
             nrOfRatings: 4,
             poster: "interstellar.jpg",
-            comments: [
-                {   
-                    userId:1,
-                    comment:''
-                },
-            ],
+            comments: [1],
         }
     ],
     comments: [
@@ -117,14 +112,14 @@ const model = {
     ]
 };  
 
-const genres = {
-    scienceFiction: false,
-    action: false,
-    adventure: false,
-    drama: false,
-    romance: false,
-    horror: false,
-    comedy: false,
-    animation: false,
-    documentary: false,
-};
+const genres = [
+    "scienceFiction",
+    "action",
+    "adventure",
+    "drama",
+    "romance",
+    "horror",
+    "comedy",
+    "animation",
+    "documentary",
+];
