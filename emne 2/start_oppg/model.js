@@ -74,7 +74,7 @@ const model = {
             ratedMovies: [
                 {
                     movieId: 1,
-                    userRating: 500,
+                    userRating: 501,
                 }
             ],
         }
