@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>QUnit</title>
+<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.22.0.css">
+
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-2.22.0.js"></script>
+    <script src="logic.js"></script>
+    <script>
+
+        // Vi har testene A og B for å være sikker på at 'isPalindrome()' fungerer med single ord
+        // Testen sjekker at ett enkelt ord korrekt identifiseres som et palindrom
+        QUnit.test('A: anna', function (assert) {
+            assert.true(isPalindrome('anna'));
+        });
+
+        // Testen sjekker at ett enkelt ord korrekt gjenkjennes at ikke er et palindrom
+        QUnit.test('B: eva', function (assert) {
+            assert.false(isPalindrome('eva'));
+        });
+
+        // Vi har testene C og D for å være sikker på at 'isPalindrom()' fungerer med setninger
+        // Testen sjekker at en setning korrekt gjennkjennes som et palindrom
+        QUnit.test('C: mormor ellemeller om rom', function (assert) {
+            assert.true(isPalindrome('mormor ellemeller om rom'));
+        });
+
+        // Testen sjekker at en setning korrekt gjennkjennes at ikke er et palindrom
+        QUnit.test('D: morfar ellemeller om rom', function (assert) {
+            assert.false(isPalindrome('morfar ellemeller om rom'));
+        });
+
+        // Vi har testene E og F for å være sikker på at 'isPalindrome()' fungerer med setninger med store og små bokstaver
+        // Testen sjekker at en setning med store og små bokstaver korrekt gjennkjennes som er palindrom
+        QUnit.test('E: Agnes i senga', function (assert) {
+            assert.true(isPalindrome('Agnes i senga'));
+        });
+
+        // Testen sjekker at en setning med store og små bokstaver korrekt gjennkjennes at ikke er et palindrom  
+        QUnit.test('F: Agnes i sengen', function (assert) {
+            assert.false(isPalindrome('Agnes i sengen'));
+        });
+
+        // Vi har Testene G og H for a være sikker på at 'isPalindrome()' fungerer med setninger som også inneholder andre tegn enn bokstaver 
+        // Testen sjekker at en setning som inneholder tegn som ikke er bokstaver korrekt gjennkjennes som et palindrom 
+        QUnit.test('G: Anna, Durek er udanna!', function (assert) {
+            assert.true(isPalindrome('Anna, Durek er udanna!'));
+        });
+
+        // Testen sjekker at en setning som inneholder tegn som ikke er bokstaver korrekt gjennkjennes at ikke er et palindrom
+        QUnit.test('H: Anne, Durek er udanna!', function (assert) {
+            assert.false(isPalindrome('Anne, Durek er udanna!'));
+        });
+
+        // Testen sjekker at en setning korrekt gjennkjennes som palindrom også om den inneholder 'ø'
+        QUnit.test('I: En ranet Unni sier: Stas at rom-nissen ga dem et ømt møte med Agnes sin mor. Ta sats, reis inn uten Arne!', function (assert) {
+            assert.true(isPalindrome('En ranet Unni sier: Stas at rom-nissen ga dem et ømt møte med Agnes sin mor. Ta sats, reis inn uten Arne!'));
+        });
+
+    </script>
+</body>
+
+</html>

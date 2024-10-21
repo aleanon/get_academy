@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word puzzle</title>
+    <script src="words.js"></script>
+</head>
+
+<body onload="generateWordPuzzles()">
+    <script>
+        const minWordLength = 7;
+        const numOfHiddenLetters = 3;
+        const totalWordPairs = 10;
+
+        function generateWordPuzzles() {
+            document.body.innerHTML = createRandomWordPairsHtml();
+        }
+
+        function createRandomWordPairsHtml() {
+            let html = "";
+            let wordPairsLeft = totalWordPairs;
+            while (wordPairsLeft > 0) {
+                let word1 = getRandomWord();
+                if (!wordIsLongEnough(word1)) continue;
+
+                let word2 = findCompatibleWord(word1);
+                if (word2 == null) continue;
+
+                html += createWordPairHtml(word1, word2);
+                wordPairsLeft--;
+            }
+            return html;
+        }
+
+        function getRandomWord() {
+            let randomIndex = Math.floor(Math.random() * words.length);
+            return words[randomIndex].trim();
+        }
+
+        function wordIsLongEnough(word) {
+            return word.length >= minWordLength
+        }
+
+        function findCompatibleWord(word1) {
+            let lastPartOfWord1 = word1.substr(word1.length - numOfHiddenLetters);
+            for (let word of words) {
+                let word2 = word.trim();
+                if (isValidPair(word1, lastPartOfWord1, word2)) return word2;
+            }
+            return null;
+        }
+
+        function isValidPair(word1, lastPartOfWord1, word2) {
+            return wordIsLongEnough(word2)
+                && word2 != word1
+                && word2.startsWith(lastPartOfWord1)
+        }
+
+        function createWordPairHtml(word1, word2) {
+            let firstPartOfWord1 = word1.substr(0, word1.length - numOfHiddenLetters);
+            let lastPartOfWord2 = word2.substr(numOfHiddenLetters);
+            let placeholderHiddenLetters = "_".repeat(numOfHiddenLetters);
+
+            return /*HTML*/`
+                <div>
+                    ${firstPartOfWord1}${placeholderHiddenLetters} ${placeholderHiddenLetters}${lastPartOfWord2}
+                    <button onclick="this.innerHTML = '${word1} ${word2}'">?</button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+
+</html>
